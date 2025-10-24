@@ -75,25 +75,25 @@ const Home = () => {
 
   return (
     <>
-      <body className="bg-gray-900 min-h-screen flex">
+      <div className="bg-gray-50 min-h-screen flex text-gray-900">
         <div className="flex-1">
           <UpperNav />
 
           <main className="p-6 px-6 sm:px-8 lg:px-10">
             <div className="max-w-7xl mx-auto">
               {/* Post composer */}
-              <div className="bg-gray-800/60 border border-gray-700 rounded-xl p-6 mb-6">
+              <div className="bg-white border border-gray-200 rounded-xl p-6 mb-6 shadow-sm">
                 <textarea
                   rows={3}
                   placeholder="Share your farming experience, ask questions, or post updates..."
-                  className="w-full bg-transparent border border-gray-700 rounded-md px-4 py-3 text-gray-200 placeholder-gray-500 focus:outline-none"
+                  className="w-full bg-white border border-gray-200 rounded-md px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none"
                 />
                 <div className="flex items-center justify-between mt-4">
-                  <div className="text-sm text-gray-400 space-x-4">
-                    <button className="text-gray-400 hover:text-white">
+                  <div className="text-sm text-gray-600 space-x-4">
+                    <button className="text-gray-600 hover:text-gray-800">
                       📷 Photo
                     </button>
-                    <button className="text-gray-400 hover:text-white">
+                    <button className="text-gray-600 hover:text-gray-800">
                       🎥 Video
                     </button>
                   </div>
@@ -109,28 +109,28 @@ const Home = () => {
                   {[1, 2, 3].map((i) => (
                     <div
                       key={i}
-                      className="bg-gray-800/60 border border-gray-700 rounded-xl p-6"
+                      className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm"
                     >
                       <div className="flex items-start gap-4 mb-4">
-                        <div className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-white">
+                        <div className="w-10 h-10 bg-green-100 text-green-700 rounded-full flex items-center justify-center font-semibold">
                           SF
                         </div>
                         <div>
-                          <div className="font-semibold text-white">
+                          <div className="font-semibold text-gray-900">
                             Sarah Johnson
                           </div>
-                          <div className="text-sm text-gray-400">
+                          <div className="text-sm text-gray-500">
                             Green Valley • 2 hours ago
                           </div>
                         </div>
                       </div>
-                      <p className="text-gray-300 mb-4">
+                      <p className="text-gray-700 mb-4">
                         Just harvested my first batch of organic tomatoes using
                         the companion planting method! The results are amazing!
                         🍅
                       </p>
-                      <div className="h-px bg-gray-700 my-4"></div>
-                      <div className="flex items-center text-sm text-gray-400 gap-6">
+                      <div className="h-px bg-gray-100 my-4"></div>
+                      <div className="flex items-center text-sm text-gray-600 gap-6">
                         <div>❤️ 24</div>
                         <div>💬 8</div>
                         <div>🔗 3</div>
@@ -141,21 +141,21 @@ const Home = () => {
 
                 {/* Sidebar */}
                 <aside className="space-y-6">
-                  <div className="bg-gray-800/60 border border-gray-700 rounded-xl p-6">
-                    <h3 className="text-white font-semibold mb-4">
+                  <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+                    <h3 className="text-gray-900 font-semibold mb-4">
                       Nearby Farmers
                     </h3>
-                    <ul className="space-y-4 text-gray-300 text-sm">
+                    <ul className="space-y-4 text-gray-700 text-sm">
                       <li>
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-green-700 rounded-full flex items-center justify-center text-white">
+                          <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-700">
                             J
                           </div>
                           <div>
                             <div className="font-medium text-white">
                               John Peterson
                             </div>
-                            <div className="text-xs text-gray-400">
+                            <div className="text-xs text-gray-500">
                               2.3 km • Corn, Soybeans
                             </div>
                           </div>
@@ -163,14 +163,14 @@ const Home = () => {
                       </li>
                       <li>
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-green-700 rounded-full flex items-center justify-center text-white">
+                          <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-700">
                             L
                           </div>
                           <div>
                             <div className="font-medium text-white">
                               Lisa Wang
                             </div>
-                            <div className="text-xs text-gray-400">
+                            <div className="text-xs text-gray-500">
                               3.1 km • Vegetables, Herbs
                             </div>
                           </div>
@@ -178,14 +178,14 @@ const Home = () => {
                       </li>
                       <li>
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-green-700 rounded-full flex items-center justify-center text-white">
+                          <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-700">
                             R
                           </div>
                           <div>
                             <div className="font-medium text-white">
                               Robert Kim
                             </div>
-                            <div className="text-xs text-gray-400">
+                            <div className="text-xs text-gray-500">
                               4.7 km • Wheat, Barley
                             </div>
                           </div>
@@ -193,14 +193,14 @@ const Home = () => {
                       </li>
                       <li>
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-green-700 rounded-full flex items-center justify-center text-white">
+                          <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-700">
                             M
                           </div>
                           <div>
                             <div className="font-medium text-white">
                               Maria Gonzalez
                             </div>
-                            <div className="text-xs text-gray-400">
+                            <div className="text-xs text-gray-500">
                               5.2 km • Fruits, Nuts
                             </div>
                           </div>
@@ -209,11 +209,11 @@ const Home = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-gray-800/60 border border-gray-700 rounded-xl p-6">
-                    <h3 className="text-white font-semibold mb-4">
+                  <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+                    <h3 className="text-gray-900 font-semibold mb-4">
                       Community Stats
                     </h3>
-                    <div className="text-gray-300 text-sm space-y-3">
+                    <div className="text-gray-700 text-sm space-y-3">
                       <div className="flex justify-between">
                         <span>Active Farmers</span>
                         <span className="font-semibold">1,247</span>
@@ -233,7 +233,7 @@ const Home = () => {
             </div>
           </main>
         </div>
-      </body>
+      </div>
     </>
   );
 };

@@ -91,7 +91,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 flex items-center justify-center py-16 relative">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-16 relative">
       {/* Fixed Landing button in the top-right corner */}
       <Link
         to="/"
@@ -106,20 +106,20 @@ const Register = () => {
             <div className="w-10 h-10 bg-green-600 rounded-md flex items-center justify-center text-white text-lg">
               <i className="fas fa-seedling"></i>
             </div>
-            <span className="text-lg md:text-xl font-semibold text-white">
+            <span className="text-lg md:text-xl font-semibold text-gray-900">
               SmartAgri
             </span>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-white">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
             Create your account
           </h1>
-          <p className="text-sm text-gray-400 mt-2">
+          <p className="text-sm text-gray-600 mt-2">
             Join the future of smart farming
           </p>
         </div>
 
         <div className="mx-auto max-w-md">
-          <div className="bg-gray-800/60 border border-gray-700 rounded-xl p-8 shadow-lg">
+          <div className="bg-white border border-gray-200 rounded-xl p-8 shadow-lg">
             <h4 className="text-red-600 font-bold mb-3">{errMsg}</h4>
             <form onSubmit={handleSubmit}>
               <label className="block text-sm text-gray-300 mb-2">
@@ -131,7 +131,7 @@ const Register = () => {
                 placeholder="Enter your full name"
                 value={c_Name}
                 onChange={(e) => set_Cname(e.target.value)}
-                className="w-full mb-4 bg-gray-900 border border-gray-700 text-gray-200 placeholder-gray-400 rounded px-3 py-2 focus:outline-none focus:border-green-500"
+                className="w-full mb-4 bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 rounded px-3 py-2 focus:outline-none focus:border-green-500"
               />
 
               <label className="block text-sm text-gray-300 mb-2">
@@ -143,7 +143,7 @@ const Register = () => {
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => set_email(e.target.value)}
-                className="w-full mb-4 bg-gray-900 border border-gray-700 text-gray-200 placeholder-gray-400 rounded px-3 py-2 focus:outline-none focus:border-green-500"
+                className="w-full mb-4 bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 rounded px-3 py-2 focus:outline-none focus:border-green-500"
               />
 
               <label className="block text-sm text-gray-300 mb-2">
@@ -158,7 +158,7 @@ const Register = () => {
                 required
                 value={pwd}
                 onChange={(e) => setPwd(e.target.value)}
-                className="w-full mb-4 bg-gray-900 border border-gray-700 text-gray-200 placeholder-gray-400 rounded px-3 py-2 focus:outline-none focus:border-green-500"
+                className="w-full mb-4 bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 rounded px-3 py-2 focus:outline-none focus:border-green-500"
               />
 
               <label className="block text-sm text-gray-300 mb-2">
@@ -171,7 +171,7 @@ const Register = () => {
                 onChange={(e) => setMatchPwd(e.target.value)}
                 value={matchPwd}
                 required
-                className="w-full mb-6 bg-gray-900 border border-gray-700 text-gray-200 placeholder-gray-400 rounded px-3 py-2 focus:outline-none focus:border-green-500"
+                className="w-full mb-6 bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 rounded px-3 py-2 focus:outline-none focus:border-green-500"
               />
 
               <button

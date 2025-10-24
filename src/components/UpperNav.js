@@ -1,7 +1,8 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useLogout from "../hooks/useLogout";
+import useTheme from "../hooks/useTheme";
 
 const UpperNav = () => {
   const { auth } = useAuth();
@@ -12,50 +13,84 @@ const UpperNav = () => {
     await logout();
     navigate("/login");
   };
+  const { theme, toggleTheme } = useTheme();
 
   return (
-    <header className="bg-gray-900 text-gray-200 shadow-sm">
+    <header
+      className="shadow-sm"
+      style={{
+        background: "var(--surface)",
+        color: "var(--text)",
+        borderBottom: "1px solid var(--nav-border)",
+      }}
+    >
       <div className="max-w-full mx-auto px-6 py-3 sm:px-6 lg:px-8 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div className="w-9 h-9 bg-green-600 rounded-md flex items-center justify-center text-white">
             <i className="fas fa-seedling"></i>
           </div>
-          <Link to="/" className="text-lg font-semibold text-white">
+          <Link to="/" className="text-lg font-semibold">
             SmartAgri
           </Link>
         </div>
 
-        <nav className="hidden md:flex items-center space-x-6">
-          <Link to="/soil" className="text-gray-300 hover:text-white">
+        <nav className="hidden md:flex items-center space-x-4">
+          <NavLink
+            to="/soil"
+            className={({ isActive }) =>
+              `nav-link ${isActive ? "active-link" : ""}`
+            }
+          >
             Soil Analysis
-          </Link>
-          <Link to="/diagnosis" className="text-gray-300 hover:text-white">
+          </NavLink>
+
+          <NavLink
+            to="/diagnosis"
+            className={({ isActive }) =>
+              `nav-link ${isActive ? "active-link" : ""}`
+            }
+          >
             Diagnosis
-          </Link>
-          <Link
+          </NavLink>
+
+          <NavLink
             to="/community"
-            className="bg-gray-800 text-green-300 px-3 py-1 rounded-md"
+            className={({ isActive }) =>
+              `nav-link ${
+                isActive
+                  ? "active-link"
+                  : "bg-green-50 text-green-700 px-3 py-1 rounded-md"
+              }`
+            }
           >
             Community
-          </Link>
-          <Link to="/profile" className="text-gray-300 hover:text-white">
+          </NavLink>
+
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              `nav-link ${isActive ? "active-link" : ""}`
+            }
+          >
             Profile
-          </Link>
+          </NavLink>
         </nav>
 
         <div className="flex items-center gap-4">
           <button
-            className="p-2 rounded-md bg-gray-800 text-gray-300 hover:bg-gray-700"
+            onClick={toggleTheme}
+            className="p-2 rounded-md bg-gray-100 text-gray-600 hover:bg-gray-200"
             aria-label="toggle-theme"
+            title={theme === "dark" ? "Switch to light" : "Switch to dark"}
           >
-            <i className="fas fa-sun"></i>
+            <i className={theme === "dark" ? "fas fa-sun" : "fas fa-moon"}></i>
           </button>
 
           <div className="hidden sm:flex items-center gap-3">
-            <span className="text-sm text-gray-300">Welcome, {auth?.user}</span>
+            <span className="text-sm text-gray-700">Welcome, {auth?.user}</span>
             <button
               onClick={handleLogout}
-              className="px-3 py-1 rounded-md border border-gray-700 text-sm text-gray-200 hover:bg-gray-800"
+              className="px-3 py-1 rounded-md border border-gray-200 text-sm text-gray-700 hover:bg-gray-50"
             >
               Logout
             </button>

@@ -69,7 +69,7 @@ const Login = () => {
   }, [persist]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 flex items-center justify-center py-16 relative">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-16 relative">
       {/* Fixed Landing button in the top-right corner */}
       <Link
         to="/"
@@ -88,16 +88,16 @@ const Login = () => {
               SmartAgri
             </span>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-white">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
             Sign in to your account
           </h1>
-          <p className="text-sm text-gray-400 mt-2">
+          <p className="text-sm text-gray-600 mt-2">
             Welcome back to the future of farming
           </p>
         </div>
 
         <div className="mx-auto max-w-md">
-          <div className="bg-gray-800/60 border border-gray-700 rounded-xl p-8 shadow-lg">
+          <div className="bg-white border border-gray-200 rounded-xl p-8 shadow-lg">
             <h4 className="text-red-600 font-bold mb-3">{errMsg}</h4>
             <form onSubmit={handleSubmit}>
               <label className="block text-sm text-gray-300 mb-2">
@@ -110,7 +110,7 @@ const Login = () => {
                 autoComplete="off"
                 {...userAttribs}
                 placeholder="Enter your email"
-                className="w-full mb-4 bg-gray-900 border border-gray-700 text-gray-200 placeholder-gray-400 rounded px-3 py-2 focus:outline-none focus:border-green-500"
+                className="w-full mb-4 bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 rounded px-3 py-2 focus:outline-none focus:border-green-500"
               />
 
               <label className="block text-sm text-gray-300 mb-2">
@@ -122,7 +122,7 @@ const Login = () => {
                 placeholder="Enter your password"
                 onChange={(e) => setPwd(e.target.value)}
                 value={pwd}
-                className="w-full mb-6 bg-gray-900 border border-gray-700 text-gray-200 placeholder-gray-400 rounded px-3 py-2 focus:outline-none focus:border-green-500"
+                className="w-full mb-6 bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 rounded px-3 py-2 focus:outline-none focus:border-green-500"
               />
 
               <button
@@ -133,17 +133,20 @@ const Login = () => {
               </button>
 
               <div className="flex items-center justify-between mb-2">
-                <label className="flex items-center text-sm text-gray-300">
+                <label className="flex items-center text-sm text-gray-700">
                   <input
                     type="checkbox"
                     id="persist"
                     onChange={togglePersist}
                     checked={persist}
-                    className="h-4 w-4 text-green-500 rounded border-gray-600 bg-gray-900"
+                    className="h-4 w-4 text-green-500 rounded border-gray-300 bg-white"
                   />
                   <span className="ml-2">Remember me</span>
                 </label>
-                <a href="#" className="text-sm text-gray-400 hover:text-white">
+                <a
+                  href="#"
+                  className="text-sm text-gray-600 hover:text-gray-800"
+                >
                   Forgot password ?
                 </a>
               </div>
@@ -151,7 +154,7 @@ const Login = () => {
 
             <p className="text-center text-sm text-gray-400 mt-4">
               Don't have an account?{" "}
-              <Link to={"/register"} className="text-green-400 font-medium">
+              <Link to={"/register"} className="text-green-600 font-medium">
                 Sign up here
               </Link>
             </p>
