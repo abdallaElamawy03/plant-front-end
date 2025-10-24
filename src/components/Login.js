@@ -1,192 +1,165 @@
-import { useRef, useState, useEffect } from 'react';
-import useAuth from '../hooks/useAuth';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import useInput from '../hooks/useInput';
+import { useRef, useState, useEffect } from "react";
+import useAuth from "../hooks/useAuth";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import useInput from "../hooks/useInput";
 
-import axios from '../api/axios';
+import axios from "../api/axios";
 
-const LOGIN_URL = '/auth';
+const LOGIN_URL = "/auth";
 
 const Login = () => {
-    const { setAuth, persist, setPersist } = useAuth();
-    const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/home";
+  const { setAuth, persist, setPersist } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/home";
 
-    const userRef = useRef();
- 
+  const userRef = useRef();
 
-    const [user, resetUser , userAttribs] = useInput('user', '');
-    const [pwd, setPwd] = useState('');
-    const [errMsg, setErrMsg] = useState('');
-    const [username, setUsername] = useState(''); // State to hold the username
+  const [user, resetUser, userAttribs] = useInput("user", "");
+  const [pwd, setPwd] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const [username, setUsername] = useState(""); // State to hold the username
 
-    
+  useEffect(() => {
+    setErrMsg("");
+  }, [user, pwd]);
 
-    useEffect(() => {
-        setErrMsg('');
-    }, [user, pwd]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-            const response = await axios.post(LOGIN_URL,
-                JSON.stringify({ username: user, password: pwd }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
-            );
-
-            console.log(response.data);
-            const accessToken = response?.data?.accessToken;
-            const roles = response?.data?.roles;
-            const company =response?.data.company
-
-            // Set authentication state
-            setAuth({ user, roles, accessToken,company });
-            setUsername(user); // Set the username in state
-            console.log("Username set:", user);
-            resetUser ();
-            setPwd('');
-            navigate(from, { replace: true });
-
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg('No Server Response');
-            } else if (err.response?.status === 400) {
-                setErrMsg('Missing Username or Password');
-            } else if (err.response?.status === 401) {
-                setErrMsg('Unauthorized');
-            } else {
-                setErrMsg('Login Failed');
-            }
-            
+    try {
+      const response = await axios.post(
+        LOGIN_URL,
+        JSON.stringify({ username: user, password: pwd }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
         }
-    };
-      const togglePersist = () => {
-        setPersist(prev => !prev);
+      );
+
+      console.log(response.data);
+      const accessToken = response?.data?.accessToken;
+      const roles = response?.data?.roles;
+
+      // Set authentication state
+      setAuth({ user, roles, accessToken });
+      setUsername(user); // Set the username in state
+      console.log("Username set:", user);
+      resetUser();
+      setPwd("");
+      navigate(from, { replace: true });
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("No Server Response");
+      } else if (err.response?.status === 400) {
+        setErrMsg("Missing Username or Password");
+      } else if (err.response?.status === 401) {
+        setErrMsg("Unauthorized");
+      } else {
+        setErrMsg("Login Failed");
+      }
     }
+  };
+  const togglePersist = () => {
+    setPersist((prev) => !prev);
+  };
 
-    useEffect(() => {
-        localStorage.setItem("persist", persist);
-    }, [persist])
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist]);
 
-    return (
-        <>
-           <body class="bg-gray-50 min-h-screen flex flex-col">
-    <header>
-      <nav class="bg-white shadow-sm py-4 px-6">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-          <div class="text-xl font-bold text-indigo-600">HR</div>
-
-          <Link to={'/'}
-            class="flex items-center text-gray-600 hover:text-indigo-600"
-          >
-            <i class="fas fa-arrow-left mr-2"></i>
-            <div>Home</div>
-          </Link>
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 flex items-center justify-center py-16 relative">
+      {/* Fixed Landing button in the top-right corner */}
+      <Link
+        to="/"
+        className="fixed top-6 right-6 z-50 text-green-400 hover:text-white border border-green-600 px-3 py-1 rounded-md bg-transparent hover:bg-green-600 transition"
+        aria-label="Go to landing"
+      >
+        Landing
+      </Link>
+      <div className="w-full max-w-xl px-6">
+        <div className="flex flex-col items-center mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 bg-green-600 rounded-md flex items-center justify-center text-white text-lg">
+              <i className="fas fa-seedling"></i>
+            </div>
+            <span className="text-lg md:text-xl font-semibold text-white">
+              SmartAgri
+            </span>
+          </div>
+          <h1 className="text-2xl md:text-3xl font-bold text-white">
+            Sign in to your account
+          </h1>
+          <p className="text-sm text-gray-400 mt-2">
+            Welcome back to the future of farming
+          </p>
         </div>
-      </nav>
-    </header>
 
-    <main class="flex-grow flex items-center justify-center p-4">
-      <div class="w-full max-w-md">
-        <div class="bg-white shadow-md rounded-lg px-8 pt-8 pb-8 mb-4">
-            <h4 className=' text-red-600 font-bold mb-2 rounded flex justify-start w-fit'>{errMsg}</h4>
-          <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">
-            Sign In
-          </h2>
-          <form onSubmit={handleSubmit}>
-
-
-          <div class="mb-4">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="username"
-            >
-              Username
-            </label>
-            <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-indigo-500"
-              
-              type="text"
-              id="username" ref={userRef} autoComplete='off' {...userAttribs}
-              placeholder="Enter your username"
-            />
-          </div>
-
-          <div class="mb-6 relative">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="password"
-              >
-              Password
-            </label>
-            <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-indigo-500"
-              id="password"
-              type="password"
-              placeholder="Enter your password"
-               onChange={(e) => setPwd(e.target.value)} value={pwd}
-              />
-          </div>
-
-          <div class="flex items-center justify-between mb-6">
-            <div class="flex items-center">
-              <input
-              
-                type="checkbox"
-                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                id="persist" onChange={togglePersist} checked={persist}
-                />
-              <label for="remember" class="ml-2 block text-sm text-gray-700">
-                Remember me
+        <div className="mx-auto max-w-md">
+          <div className="bg-gray-800/60 border border-gray-700 rounded-xl p-8 shadow-lg">
+            <h4 className="text-red-600 font-bold mb-3">{errMsg}</h4>
+            <form onSubmit={handleSubmit}>
+              <label className="block text-sm text-gray-300 mb-2">
+                Email Address
               </label>
-            </div>
-            <div>
-              <a href="#" class="text-sm text-indigo-600 hover:text-indigo-800">
-                Forgot password ?
-              </a>
-            </div>
-          </div>
+              <input
+                type="text"
+                id="username"
+                ref={userRef}
+                autoComplete="off"
+                {...userAttribs}
+                placeholder="Enter your email"
+                className="w-full mb-4 bg-gray-900 border border-gray-700 text-gray-200 placeholder-gray-400 rounded px-3 py-2 focus:outline-none focus:border-green-500"
+              />
 
-          <div class="mb-6">
-           
-              <button type="submit"
-                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150"
-                
-                >
+              <label className="block text-sm text-gray-300 mb-2">
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                onChange={(e) => setPwd(e.target.value)}
+                value={pwd}
+                className="w-full mb-6 bg-gray-900 border border-gray-700 text-gray-200 placeholder-gray-400 rounded px-3 py-2 focus:outline-none focus:border-green-500"
+              />
+
+              <button
+                type="submit"
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded-md mb-4 transition"
+              >
                 Sign In
               </button>
-         
-          </div>
-              </form>
 
-          <div class="text-center">
-            <p class="text-sm text-gray-600">
-              Don't have an account?  
-              <Link to={'/register'}
-                
-                class="text-indigo-600 hover:text-indigo-800 font-medium"
-                >
-                Sign up
+              <div className="flex items-center justify-between mb-2">
+                <label className="flex items-center text-sm text-gray-300">
+                  <input
+                    type="checkbox"
+                    id="persist"
+                    onChange={togglePersist}
+                    checked={persist}
+                    className="h-4 w-4 text-green-500 rounded border-gray-600 bg-gray-900"
+                  />
+                  <span className="ml-2">Remember me</span>
+                </label>
+                <a href="#" className="text-sm text-gray-400 hover:text-white">
+                  Forgot password ?
+                </a>
+              </div>
+            </form>
+
+            <p className="text-center text-sm text-gray-400 mt-4">
+              Don't have an account?{" "}
+              <Link to={"/register"} className="text-green-400 font-medium">
+                Sign up here
               </Link>
             </p>
           </div>
         </div>
       </div>
-    </main>
-
-    <footer class="bg-white py-4 px-6 shadow-inner">
-      <div class="max-w-7xl mx-auto text-center text-gray-500 text-sm">
-        &copy; 2025
-      </div>
-    </footer>
-  </body>
-        </>
-    );
+    </div>
+  );
 };
 
 export default Login;

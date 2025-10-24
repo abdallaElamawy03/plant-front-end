@@ -1,39 +1,69 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import useLogout from "../hooks/useLogout";
+
 const UpperNav = () => {
-    const { auth } = useAuth();
-    const[name,setname]=useState('')
-    useEffect(()=>{
-        setname(auth?.user)
-    },[auth])
+  const { auth } = useAuth();
+  const logout = useLogout();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
+
   return (
-  <header class="bg-white shadow-sm">
-        <div
-          class="max-w-full mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center"
-        >
-          
+    <header className="bg-gray-900 text-gray-200 shadow-sm">
+      <div className="max-w-full mx-auto px-6 py-3 sm:px-6 lg:px-8 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className="w-9 h-9 bg-green-600 rounded-md flex items-center justify-center text-white">
+            <i className="fas fa-seedling"></i>
+          </div>
+          <Link to="/" className="text-lg font-semibold text-white">
+            SmartAgri
+          </Link>
+        </div>
 
-          <div class="flex-1 flex justify-between items-center">
-            <div class="flex items-center">
-              <h1 class="text-xl font-semibold text-gray-900">Dashboard</h1>
-            </div>
+        <nav className="hidden md:flex items-center space-x-6">
+          <Link to="/soil" className="text-gray-300 hover:text-white">
+            Soil Analysis
+          </Link>
+          <Link to="/diagnosis" className="text-gray-300 hover:text-white">
+            Diagnosis
+          </Link>
+          <Link
+            to="/community"
+            className="bg-gray-800 text-green-300 px-3 py-1 rounded-md"
+          >
+            Community
+          </Link>
+          <Link to="/profile" className="text-gray-300 hover:text-white">
+            Profile
+          </Link>
+        </nav>
 
-            <div class="flex items-center space-x-4">
-              <div class="relative">
-                <button class="flex items-center space-x-2">
-                  <div
-                    class="h-8 w-8 rounded-full bg-[#00224b] flex items-center justify-center text-white"
-                  >
-                    <Link to={'/home'}>{name.slice(0,1)}{name.slice(-1)}</Link>
-                  </div>
-                  <div class="hidden md:inline">{auth?.user}</div>
-                </button>
-              </div>
-            </div>
+        <div className="flex items-center gap-4">
+          <button
+            className="p-2 rounded-md bg-gray-800 text-gray-300 hover:bg-gray-700"
+            aria-label="toggle-theme"
+          >
+            <i className="fas fa-sun"></i>
+          </button>
+
+          <div className="hidden sm:flex items-center gap-3">
+            <span className="text-sm text-gray-300">Welcome, {auth?.user}</span>
+            <button
+              onClick={handleLogout}
+              className="px-3 py-1 rounded-md border border-gray-700 text-sm text-gray-200 hover:bg-gray-800"
+            >
+              Logout
+            </button>
           </div>
         </div>
-      </header>  )
-}
+      </div>
+    </header>
+  );
+};
 
-export default UpperNav
+export default UpperNav;
