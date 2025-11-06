@@ -122,28 +122,22 @@ const Landing = () => {
             </div>
 
             <div className="relative">
-              {/* large background card (behind) */}
-              <div className="w-full h-56 md:h-80 bg-gray-100 rounded-2xl shadow-md transform md:translate-x-8 lg:translate-x-12 rotate-0 z-0"></div>
+              <div className="w-full h-56 md:h-80 bg-gray-100 rounded-2xl shadow-md transform md:translate-x-8 lg:translate-x-12 -rotate-1 z-0"></div>
 
               {/* white card - fill the main large card area */}
-              <div className="absolute inset-4 md:inset-6 bg-white rounded-2xl shadow-lg transform z-10 p-6 md:p-8 text-gray-900 flex items-start">
-                <img
-                  src="/img/banner.png"
-                  alt="Smart Farming"
-                  className="w-12 h-12 rounded mr-4 object-cover"
-                />
-                <div className="font-medium text-lg">Smart Farming</div>
-              </div>
+              <img
+                src=""
+                alt="Smart Farming"
+                className="absolute md:inset-3  w-100 h-100 rounded-2xl shadow-lg transform -rotate-1 z-10 object-cover"
+              />
 
               {/* orange card - kept in front and positioned to overlap like the design */}
-              <div className="absolute -bottom-8 md:-bottom-6 left-4 md:left-16 w-52 h-36 bg-amber-400 rounded-2xl shadow-lg transform -rotate-3 z-20 flex items-start p-4">
-                <img
-                  src="/img/banner.png"
-                  alt="Farm Community"
-                  className="w-10 h-10 rounded mr-3 object-cover"
-                />
-                <div className="text-black font-medium">Farm Community</div>
-              </div>
+              <img
+                src=""
+                alt="Farm Community"
+                className="absolute 
+                border-amber-400 -bottom-8 md:-bottom-6 left-4 md:left-16 w-52 h-36 rounded-2xl shadow-lg transform -rotate-6 z-20 object-cover"
+              />
             </div>
           </div>
         </div>
