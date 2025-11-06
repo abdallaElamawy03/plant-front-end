@@ -101,7 +101,7 @@ const Login = () => {
             <h4 className="text-red-600 font-bold mb-3">{errMsg}</h4>
             <form onSubmit={handleSubmit}>
               <label className="block text-sm text-gray-300 mb-2">
-                Email Address
+                Username
               </label>
               <input
                 type="text"
@@ -109,7 +109,7 @@ const Login = () => {
                 ref={userRef}
                 autoComplete="off"
                 {...userAttribs}
-                placeholder="Enter your email"
+                placeholder="Enter your username"
                 className="w-full mb-4 bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 rounded px-3 py-2 focus:outline-none focus:border-green-500"
               />
 
