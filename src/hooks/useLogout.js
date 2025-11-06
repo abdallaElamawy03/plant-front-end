@@ -5,35 +5,24 @@ import useLocalStorage from "./useLocalStorage";
 import useToggle from "./useToggle";
 
 const useLogout = () => {
-    const { setAuth } = useAuth();
+  const { setAuth } = useAuth();
 
-    
+  const logout = async () => {
+    setAuth({});
+    try {
+      const response = await axios.post("auth/logout", {
+        withCredentials: true,
+      });
 
+      localStorage.setItem("persist", false);
 
-    const logout = async () => {
-        setAuth({});
-        try {
-            const response = await axios.post('auth/logout', {
-                withCredentials: true
-            });
-
-            localStorage.setItem('persist',false)
-            
-            
-            
-           
-            
-            
-            console.log(response)
-            
-            
-        } catch (err) {
-            console.error(err);
-        }
+      console.log(response);
+    } catch (err) {
+      console.error(err);
     }
-    
+  };
 
-    return logout;
-}
+  return logout;
+};
 
-export default useLogout
+export default useLogout;

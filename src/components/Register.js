@@ -98,7 +98,7 @@ const Register = () => {
         className="fixed top-6 right-6 z-50 text-green-400 hover:text-white border border-green-600 px-3 py-1 rounded-md bg-transparent hover:bg-green-600 transition"
         aria-label="Go to landing"
       >
-        Landing
+        Back
       </Link>
       <div className="w-full max-w-xl px-6">
         <div className="flex flex-col items-center mb-8">
