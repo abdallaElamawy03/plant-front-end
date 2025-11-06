@@ -10,16 +10,65 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Company_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = "/company";
+const REGISTER_URL = "/users";
 
 const Register = () => {
   const userRef = useRef();
   const errRef = useRef();
   const navigate = useNavigate();
-  const [email, set_email] = useState("");
-  const [c_Name, set_Cname] = useState("");
+  const [phonenumber, setPhonenumber] = useState("");
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+
+  // Find country code automatically
+  const countries = [
+  { name: "Egypt", code: "+20" },
+  { name: "USA", code: "+1" },
+  { name: "UK", code: "+44" },
+  { name: "Saudi Arabia", code: "+966" },
+  { name: "UAE", code: "+971" },
+];
+  const selectedCountry = countries.find((c) => c.name === country);
+  const countryCode = selectedCountry ? selectedCountry.code : "";
+
+  const handlePhoneChange = (e) => {
+    const value = e.target.value.replace(/[^0-9]/g, ""); // allow only digits
+    setPhonenumber(value);
+  };
+
+const egyptGovernorates = [
+  "Cairo",
+  "Giza",
+  "Alexandria",
+  "Dakahlia",
+  "Red Sea",
+  "Beheira",
+  "Fayoum",
+  "Gharbia",
+  "Ismailia",
+  "Menofia",
+  "Minya",
+  "Qaliubiya",
+  "New Valley",
+  "Suez",
+  "Aswan",
+  "Assiut",
+  "Beni Suef",
+  "Port Said",
+  "Damietta",
+  "Sharkia",
+  "South Sinai",
+  "Kafr El Sheikh",
+  "Matrouh",
+  "Luxor",
+  "Qena",
+  "North Sinai",
+  "Sohag",
+];
+
+  const [user, set_user] = useState("");
   const [validName, setValidName] = useState(false);
-  const [userFocus, setUserFocus] = useState(false);
+  const [userFocus, setUserFocus] = useState(false);  
 
   const [pwd, setPwd] = useState("");
   const [validPwd, setValidPwd] = useState(false);
@@ -37,8 +86,8 @@ const Register = () => {
   // }, [])
 
   useEffect(() => {
-    setValidName(Company_REGEX.test(c_Name));
-  }, [c_Name]);
+    setValidName(Company_REGEX.test(user));
+  }, [user]);
 
   useEffect(() => {
     setValidPwd(PWD_REGEX.test(pwd));
@@ -47,22 +96,23 @@ const Register = () => {
 
   useEffect(() => {
     setErrMsg("");
-  }, [c_Name, pwd, matchPwd]);
+  }, [user, pwd, matchPwd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // if button enabled with JS hack
-    const v1 = Company_REGEX.test(c_Name);
+    const v1 = Company_REGEX.test(user);
     const v2 = PWD_REGEX.test(pwd);
     // if (!v1 || !v2) {
     //     setErrMsg("Enter more powerful password");
     //     return;
     // }
     try {
-      // c_Name,password,email
+      // user,password,email
       const response = await axios.post(
         REGISTER_URL,
-        JSON.stringify({ c_Name: c_Name, email: email, password: pwd }),
+        JSON.stringify({ username: user, password: pwd ,phonenumber:phonenumber,country:country,city:city}),
+        
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
@@ -75,7 +125,7 @@ const Register = () => {
       //console.log(JSON.stringify(response))
       setSuccess(true);
       //clear state and controlled inputs
-      set_Cname("");
+      set_user("");
       setPwd("");
       setMatchPwd("");
     } catch (err) {
@@ -123,28 +173,18 @@ const Register = () => {
             <h4 className="text-red-600 font-bold mb-3">{errMsg}</h4>
             <form onSubmit={handleSubmit}>
               <label className="block text-sm text-gray-300 mb-2">
-                Full Name
+                username
               </label>
               <input
                 type="text"
-                id="company"
+                id="user"
                 placeholder="Enter your full name"
-                value={c_Name}
-                onChange={(e) => set_Cname(e.target.value)}
+                value={user}
+                onChange={(e) => set_user(e.target.value)}
                 className="w-full mb-4 bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 rounded px-3 py-2 focus:outline-none focus:border-green-500"
               />
 
-              <label className="block text-sm text-gray-300 mb-2">
-                Username
-              </label>
-              <input
-                type="text"
-                id="username"
-                placeholder="Enter your username"
-                value={email}
-                onChange={(e) => set_email(e.target.value)}
-                className="w-full mb-4 bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 rounded px-3 py-2 focus:outline-none focus:border-green-500"
-              />
+              
 
               <label className="block text-sm text-gray-300 mb-2">
                 Password
@@ -173,6 +213,72 @@ const Register = () => {
                 required
                 className="w-full mb-6 bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 rounded px-3 py-2 focus:outline-none focus:border-green-500"
               />
+             <div className="p-4 bg-gray-900 text-white rounded-lg">
+      {/* Phone number */}
+      <label className="block text-sm text-gray-300 mb-2">Phone Number</label>
+      <div className="flex items-center mb-6">
+        <input
+          type="text"
+          disabled
+          value={countryCode}
+          className="w-20 bg-gray-800 border border-gray-700 text-white-300 rounded-l px-3 py-2 text-center"
+        />
+        <input
+          type="tel"
+          placeholder="Enter phone number"
+          onChange={handlePhoneChange}
+          value={phonenumber}
+          required
+          className="flex-1 bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 rounded-r px-3 py-2 focus:outline-none focus:border-green-500"
+        />
+      </div>
+
+      {/* Country */}
+      <label className="block text-sm text-gray-300 mb-2">Country</label>
+      <select
+        value={country}
+        onChange={(e) => {
+          setCountry(e.target.value);
+          setCity(""); // reset city on change
+        }}
+        required
+        className="w-full mb-6 bg-gray-50 border border-gray-200 text-gray-900 rounded px-3 py-2 focus:outline-none focus:border-green-500"
+      >
+        <option value="">Select Country</option>
+        {countries.map((c) => (
+          <option key={c.name} value={c.name}>
+            {c.name}
+          </option>
+        ))}
+      </select>
+
+      {/* City */}
+      <label className="block text-sm text-gray-300 mb-2">City</label>
+      {country === "Egypt" ? (
+        <select
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          required
+          className="w-full mb-6 bg-gray-50 border border-gray-200 text-gray-900 rounded px-3 py-2 focus:outline-none focus:border-green-500"
+        >
+          <option value="">Select Governorate</option>
+          {egyptGovernorates.map((gov) => (
+            <option key={gov} value={gov}>
+              {gov}
+            </option>
+          ))}
+        </select>
+      ) : (
+        <input
+          type="text"
+          placeholder="Enter your city"
+          onChange={(e) => setCity(e.target.value)}
+          value={city}
+          required
+          className="w-full mb-6 bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 rounded px-3 py-2 focus:outline-none focus:border-green-500"
+        />
+      )}
+    </div>
 
               <button
                 type="submit"
