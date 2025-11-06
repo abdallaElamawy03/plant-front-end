@@ -59,7 +59,7 @@ const UpperNav = () => {
               `nav-link ${
                 isActive
                   ? "active-link"
-                  : "bg-green-50 text-green-700 px-3 py-1 rounded-md"
+                  : "bg-green-600 text-black-700 px-3 py-1 rounded-md"
               }`
             }
           >

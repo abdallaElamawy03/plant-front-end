@@ -111,8 +111,7 @@ const egyptGovernorates = [
       // user,password,email
       const response = await axios.post(
         REGISTER_URL,
-        JSON.stringify({ username: user, password: pwd ,phonenumber:phonenumber,country:country,city:city}),
-        
+        JSON.stringify({ username: user, password: pwd ,phonenumber:countryCode+phonenumber,country:country,city}),
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
