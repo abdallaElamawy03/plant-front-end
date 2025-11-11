@@ -1,6 +1,10 @@
 import Register from "./components/Register";
 import Login from "./components/Login";
-import Home from "./components/Home";
+import Community from "./components/Community";
+import Dashboard from "./components/Dashboard";
+import SoilAnalysis from "./components/SoilAnalysis";
+import PlantDiagnosis from "./components/PlantDiagnosis";
+import Profile from "./components/Profile";
 import Layout from "./components/Layout";
 import Editor from "./components/Editor";
 import Missing from "./components/Missing";
@@ -33,7 +37,11 @@ function App() {
           <Route
             element={<RequireAuth allowedRoles={[roles.Admin, roles.user]} />}
           >
-            <Route path="/home" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/soil" element={<SoilAnalysis />} />
+            <Route path="/diagnosis" element={<PlantDiagnosis />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/community" element={<Community />} />
           </Route>
 
           <Route

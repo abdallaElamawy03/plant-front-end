@@ -11,7 +11,7 @@ const Login = () => {
   const { setAuth, persist, setPersist } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/home";
+  const from = location.state?.from?.pathname || "/dashboard";
 
   const userRef = useRef();
 

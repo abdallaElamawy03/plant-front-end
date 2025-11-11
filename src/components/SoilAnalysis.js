@@ -1,0 +1,331 @@
+import { useNavigate } from "react-router-dom";
+import useLogout from "../hooks/useLogout";
+import useAuth from "../hooks/useAuth";
+import { useState, useEffect } from "react";
+import "./App.css";
+import UpperNav from "./UpperNav";
+
+const SoilAnalysis = () => {
+  const [formData, setFormData] = useState({
+    ph: "",
+    moisture: "",
+    nitrogen: "",
+    phosphorus: "",
+    potassium: "",
+  });
+
+  const [analysisResult, setAnalysisResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+  const { auth } = useAuth();
+  const logout = useLogout();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Validate inputs
+    if (
+      !formData.ph ||
+      !formData.moisture ||
+      !formData.nitrogen ||
+      !formData.phosphorus ||
+      !formData.potassium
+    ) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    setLoading(true);
+
+    // TODO: Implement API call to analyze soil
+    try {
+      // const response = await axiosPrivate.post("/soil/analyze", formData);
+      // setAnalysisResult(response.data);
+
+      // Placeholder for now
+      console.log("Analyzing soil with data:", formData);
+
+      // Simulate API response
+      setTimeout(() => {
+        setAnalysisResult({
+          status: "success",
+          message: "Analysis complete! Check back soon for recommendations.",
+        });
+        setLoading(false);
+      }, 1500);
+    } catch (err) {
+      console.error("Error analyzing soil:", err);
+      alert("Failed to analyze soil. Please try again.");
+      setLoading(false);
+    }
+  };
+
+  const signOut = async () => {
+    await logout();
+    navigate("/login");
+  };
+
+  return (
+    <div className="bg-gray-50 min-h-screen text-gray-900">
+      <UpperNav />
+
+      <main className="p-6 px-6 sm:px-8 lg:px-10">
+        <div className="max-w-7xl mx-auto">
+          {/* Header Section */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold mb-4 text-gray-900">
+              Soil Analysis
+            </h1>
+            <p className="text-gray-600 text-lg">
+              Get detailed insights about your soil health and personalized crop
+              recommendations.
+            </p>
+          </div>
+
+          {/* Main Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Left Side - Form */}
+            <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* PH and Moisture Row */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      htmlFor="ph"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
+                      PH
+                    </label>
+                    <input
+                      type="number"
+                      id="ph"
+                      name="ph"
+                      step="0.1"
+                      min="0"
+                      max="14"
+                      value={formData.ph}
+                      onChange={handleInputChange}
+                      placeholder="6.5"
+                      className="w-full bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="moisture"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
+                      Moisture
+                    </label>
+                    <input
+                      type="number"
+                      id="moisture"
+                      name="moisture"
+                      step="0.1"
+                      min="0"
+                      max="100"
+                      value={formData.moisture}
+                      onChange={handleInputChange}
+                      placeholder="50"
+                      className="w-full bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    />
+                  </div>
+                </div>
+
+                {/* Nitrogen and Phosphorus Row */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      htmlFor="nitrogen"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
+                      Nitrogen
+                    </label>
+                    <input
+                      type="number"
+                      id="nitrogen"
+                      name="nitrogen"
+                      step="0.1"
+                      min="0"
+                      value={formData.nitrogen}
+                      onChange={handleInputChange}
+                      placeholder="50"
+                      className="w-full bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="phosphorus"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
+                      Phosphorus
+                    </label>
+                    <input
+                      type="number"
+                      id="phosphorus"
+                      name="phosphorus"
+                      step="0.1"
+                      min="0"
+                      value={formData.phosphorus}
+                      onChange={handleInputChange}
+                      placeholder="50"
+                      className="w-full bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    />
+                  </div>
+                </div>
+
+                {/* Potassium */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      htmlFor="potassium"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
+                      Potassium
+                    </label>
+                    <input
+                      type="number"
+                      id="potassium"
+                      name="potassium"
+                      step="0.1"
+                      min="0"
+                      value={formData.potassium}
+                      onChange={handleInputChange}
+                      placeholder="50"
+                      className="w-full bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    />
+                  </div>
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className={`w-full ${
+                    loading ? "bg-green-700" : "bg-green-600 hover:bg-green-700"
+                  } text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2`}
+                >
+                  {loading ? (
+                    <>
+                      <svg
+                        className="animate-spin h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Analyzing...
+                    </>
+                  ) : (
+                    "Analyze Soil"
+                  )}
+                </button>
+              </form>
+            </div>
+
+            {/* Right Side - Results */}
+            <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm flex flex-col items-center justify-center text-center">
+              {!analysisResult ? (
+                <>
+                  <div className="w-24 h-24 mb-6 opacity-30 text-gray-400">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      className="w-full h-full"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232 1.232 3.227 0 4.459l-1.906 1.906c-1.232 1.232-3.227 1.232-4.459 0l-4.069-4.069a2.25 2.25 0 01-.659-1.591V8.5m0 6l-3.182 3.182c-1.232 1.232-3.227 1.232-4.459 0L2.602 16.78c-1.232-1.232-1.232-3.227 0-4.459L6.77 8.25"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3 text-gray-900">
+                    No Analysis Yet
+                  </h3>
+                  <p className="text-gray-600">
+                    Submit your soil data to get recommendations.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <div className="w-24 h-24 mb-6 text-green-600">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      className="w-full h-full"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3 text-green-600">
+                    Analysis Complete!
+                  </h3>
+                  <p className="text-gray-700 mb-4">{analysisResult.message}</p>
+                  <div className="bg-gray-50 rounded-lg p-4 mt-4 w-full text-left border border-gray-200">
+                    <h4 className="font-semibold mb-2 text-gray-900">
+                      Submitted Data:
+                    </h4>
+                    <div className="text-sm text-gray-600 space-y-1">
+                      <p>PH: {formData.ph}</p>
+                      <p>Moisture: {formData.moisture}%</p>
+                      <p>Nitrogen: {formData.nitrogen}</p>
+                      <p>Phosphorus: {formData.phosphorus}</p>
+                      <p>Potassium: {formData.potassium}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setAnalysisResult(null);
+                      setFormData({
+                        ph: "",
+                        moisture: "",
+                        nitrogen: "",
+                        phosphorus: "",
+                        potassium: "",
+                      });
+                    }}
+                    className="mt-6 text-green-600 hover:text-green-700 font-medium"
+                  >
+                    New Analysis
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default SoilAnalysis;

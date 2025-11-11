@@ -6,7 +6,7 @@ import "./App.css";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import UpperNav from "./UpperNav";
 
-const Home = () => {
+const Community = () => {
   const [posts, setPosts] = useState([]);
   const [title, setTitle] = useState(""); // ✅ track input
   const [loading, setLoading] = useState(false);
@@ -214,4 +214,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Community;

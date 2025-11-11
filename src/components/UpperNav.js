@@ -36,6 +36,15 @@ const UpperNav = () => {
 
         <nav className="hidden md:flex items-center space-x-4">
           <NavLink
+            to="/dashboard"
+            className={({ isActive }) =>
+              `nav-link ${isActive ? "active-link" : ""}`
+            }
+          >
+            Dashboard
+          </NavLink>
+
+          <NavLink
             to="/soil"
             className={({ isActive }) =>
               `nav-link ${isActive ? "active-link" : ""}`
@@ -56,11 +65,7 @@ const UpperNav = () => {
           <NavLink
             to="/community"
             className={({ isActive }) =>
-              `nav-link ${
-                isActive
-                  ? "active-link"
-                  : "bg-green-600 text-black-700 px-3 py-1 rounded-md"
-              }`
+              `nav-link ${isActive ? "active-link" : ""}`
             }
           >
             Community
