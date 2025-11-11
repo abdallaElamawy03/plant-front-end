@@ -84,7 +84,7 @@ const Login = () => {
             <div className="w-10 h-10 bg-green-600 rounded-md flex items-center justify-center text-white text-lg">
               <i className="fas fa-seedling"></i>
             </div>
-            <span className="text-lg md:text-xl font-semibold text-white">
+            <span className="text-lg md:text-xl font-semibold text-gray-900">
               SmartAgri
             </span>
           </div>

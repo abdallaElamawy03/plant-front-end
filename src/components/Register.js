@@ -212,15 +212,16 @@ const egyptGovernorates = [
                 required
                 className="w-full mb-6 bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 rounded px-3 py-2 focus:outline-none focus:border-green-500"
               />
-             <div className="p-4 bg-gray-900 text-white rounded-lg">
+     
       {/* Phone number */}
       <label className="block text-sm text-gray-300 mb-2">Phone Number</label>
       <div className="flex items-center mb-6">
         <input
           type="text"
           disabled
+          placeholder="+"
           value={countryCode}
-          className="w-20 bg-gray-800 border border-gray-700 text-white-300 rounded-l px-3 py-2 text-center"
+          className="w-20 bg-gray-50 border border-gray-700 text-white-300 rounded-l px-3 py-2 text-center"
         />
         <input
           type="tel"
@@ -245,7 +246,8 @@ const egyptGovernorates = [
       >
         <option value="">Select Country</option>
         {countries.map((c) => (
-          <option key={c.name} value={c.name}>
+          <option 
+          key={c.name} value={c.name}>
             {c.name}
           </option>
         ))}
@@ -277,7 +279,7 @@ const egyptGovernorates = [
           className="w-full mb-6 bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 rounded px-3 py-2 focus:outline-none focus:border-green-500"
         />
       )}
-    </div>
+
 
               <button
                 type="submit"
