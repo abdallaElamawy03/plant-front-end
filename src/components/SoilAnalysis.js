@@ -265,10 +265,10 @@ const SoilAnalysis = () => {
                     </svg>
                   </div>
                   <h3 className="text-2xl font-bold mb-3 text-gray-900">
-                    No Analysis Yet
+                    {t("soilAnalysis.results.noAnalysis")}
                   </h3>
                   <p className="text-gray-600">
-                    Submit your soil data to get recommendations.
+                    {t("soilAnalysis.results.submitPrompt")}
                   </p>
                 </>
               ) : (
@@ -289,19 +289,30 @@ const SoilAnalysis = () => {
                     </svg>
                   </div>
                   <h3 className="text-2xl font-bold mb-3 text-green-600">
-                    Analysis Complete!
+                    {t("soilAnalysis.results.complete")}
                   </h3>
                   <p className="text-gray-700 mb-4">{analysisResult.message}</p>
                   <div className="bg-gray-50 rounded-lg p-4 mt-4 w-full text-left border border-gray-200">
                     <h4 className="font-semibold mb-2 text-gray-900">
-                      Submitted Data:
+                      {t("soilAnalysis.results.submittedData")}
                     </h4>
                     <div className="text-sm text-gray-600 space-y-1">
-                      <p>PH: {formData.ph}</p>
-                      <p>Moisture: {formData.moisture}%</p>
-                      <p>Nitrogen: {formData.nitrogen}</p>
-                      <p>Phosphorus: {formData.phosphorus}</p>
-                      <p>Potassium: {formData.potassium}</p>
+                      <p>
+                        {t("soilAnalysis.form.ph")}: {formData.ph}
+                      </p>
+                      <p>
+                        {t("soilAnalysis.form.moisture")}: {formData.moisture}%
+                      </p>
+                      <p>
+                        {t("soilAnalysis.form.nitrogen")}: {formData.nitrogen}
+                      </p>
+                      <p>
+                        {t("soilAnalysis.form.phosphorus")}:{" "}
+                        {formData.phosphorus}
+                      </p>
+                      <p>
+                        {t("soilAnalysis.form.potassium")}: {formData.potassium}
+                      </p>
                     </div>
                   </div>
                   <button
@@ -317,7 +328,7 @@ const SoilAnalysis = () => {
                     }}
                     className="mt-6 text-green-600 hover:text-green-700 font-medium"
                   >
-                    New Analysis
+                    {t("soilAnalysis.results.newAnalysis")}
                   </button>
                 </>
               )}

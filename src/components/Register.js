@@ -237,7 +237,7 @@ const Register = () => {
                 />
                 <input
                   type="tel"
-                  placeholder="Enter phone number"
+                  placeholder={t("register.phoneNumber")}
                   onChange={handlePhoneChange}
                   value={phonenumber}
                   required
@@ -287,7 +287,7 @@ const Register = () => {
               ) : (
                 <input
                   type="text"
-                  placeholder="Enter your city"
+                  placeholder={t("register.city")}
                   onChange={(e) => setCity(e.target.value)}
                   value={city}
                   required

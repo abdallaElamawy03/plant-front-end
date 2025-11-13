@@ -166,6 +166,13 @@
     },
     "errors": {
       "fillAllFields": "Please fill in all fields"
+    },
+    "results": {
+      "noAnalysis": "No Analysis Yet",
+      "submitPrompt": "Submit your soil data to get recommendations.",
+      "complete": "Analysis Complete!",
+      "submittedData": "Submitted Data:",
+      "newAnalysis": "New Analysis"
     }
   },
   "plantDiagnosis": {

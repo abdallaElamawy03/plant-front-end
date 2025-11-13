@@ -166,6 +166,13 @@
     },
     "errors": {
       "fillAllFields": "يرجى ملء جميع الحقول"
+    },
+    "results": {
+      "noAnalysis": "لا يوجد تحليل بعد",
+      "submitPrompt": "أرسل بيانات التربة للحصول على التوصيات.",
+      "complete": "اكتمل التحليل!",
+      "submittedData": "البيانات المقدمة:",
+      "newAnalysis": "تحليل جديد"
     }
   },
   "plantDiagnosis": {

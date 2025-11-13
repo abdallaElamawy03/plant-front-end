@@ -31,16 +31,32 @@ const Landing = () => {
     },
   ];
 
-  const stats = [
-    { value: "10K+", label: "Farmers Connected", icon: "fas fa-users" },
-    { value: "95%", label: "Accuracy Rate", icon: "fas fa-chart-line" },
-    { value: "50+", label: "Crop Varieties", icon: "fas fa-seedling" },
-    { value: "24/7", label: "Expert Support", icon: "fas fa-shield-alt" },
-  ];
-
   // testimonials removed to match provided landing design (keeps functionality unchanged)
   const { theme, toggleTheme } = useTheme();
   const { t } = useTranslation();
+
+  const stats = [
+    {
+      value: "10K+",
+      label: t("landing.stats.farmersConnected"),
+      icon: "fas fa-users",
+    },
+    {
+      value: "95%",
+      label: t("landing.stats.accuracyRate"),
+      icon: "fas fa-chart-line",
+    },
+    {
+      value: "50+",
+      label: t("landing.stats.cropVarieties"),
+      icon: "fas fa-seedling",
+    },
+    {
+      value: "24/7",
+      label: t("landing.stats.expertSupport"),
+      icon: "fas fa-shield-alt",
+    },
+  ];
 
   return (
     <div className="min-h-screen font-sans bg-white text-gray-900">

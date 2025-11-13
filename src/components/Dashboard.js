@@ -9,38 +9,38 @@ import UpperNav from "./UpperNav";
 const Dashboard = () => {
   const { t } = useTranslation();
   const [stats, setStats] = useState({
-    soilAnalyses: { count: 12, change: "+2 this month" },
-    plantDiagnoses: { count: 8, change: "+1 this month" },
-    communityPosts: { count: 23, change: "+5 this month" },
-    cropsMonitored: { count: 6, change: "+1 this month" },
+    soilAnalyses: { count: 12, change: "+2" },
+    plantDiagnoses: { count: 8, change: "+1" },
+    communityPosts: { count: 23, change: "+5" },
+    cropsMonitored: { count: 6, change: "+1" },
   });
 
   const [recentActivity, setRecentActivity] = useState([
     {
       id: 1,
       type: "soil",
-      title: "Soil analysis completed",
+      titleKey: "dashboard.recentActivity.soilCompleted",
       time: "2 hours ago",
       color: "blue",
     },
     {
       id: 2,
       type: "community",
-      title: "New community post",
+      titleKey: "dashboard.recentActivity.communityPost",
       time: "1 day ago",
       color: "green",
     },
     {
       id: 3,
       type: "disease",
-      title: "Plant disease diagnosed",
+      titleKey: "dashboard.recentActivity.diseaseDiagnosed",
       time: "2 days ago",
       color: "orange",
     },
     {
       id: 4,
       type: "crop",
-      title: "Crop recommendation received",
+      titleKey: "dashboard.recentActivity.cropRecommendation",
       time: "3 days ago",
       color: "purple",
     },
@@ -120,7 +120,7 @@ const Dashboard = () => {
               </div>
               <p className="text-green-600 text-sm mt-4 flex items-center gap-1">
                 <span>↗</span>
-                {stats.soilAnalyses.change}
+                {stats.soilAnalyses.change} {t("dashboard.stats.thisMonth")}
               </p>
             </div>
 
@@ -138,7 +138,7 @@ const Dashboard = () => {
               </div>
               <p className="text-green-600 text-sm mt-4 flex items-center gap-1">
                 <span>↗</span>
-                {stats.plantDiagnoses.change}
+                {stats.plantDiagnoses.change} {t("dashboard.stats.thisMonth")}
               </p>
             </div>
 
@@ -156,7 +156,7 @@ const Dashboard = () => {
               </div>
               <p className="text-green-600 text-sm mt-4 flex items-center gap-1">
                 <span>↗</span>
-                {stats.communityPosts.change}
+                {stats.communityPosts.change} {t("dashboard.stats.thisMonth")}
               </p>
             </div>
 
@@ -174,7 +174,7 @@ const Dashboard = () => {
               </div>
               <p className="text-green-600 text-sm mt-4 flex items-center gap-1">
                 <span>↗</span>
-                {stats.cropsMonitored.change}
+                {stats.cropsMonitored.change} {t("dashboard.stats.thisMonth")}
               </p>
             </div>
           </div>
@@ -204,7 +204,7 @@ const Dashboard = () => {
                         onClick={() => handleNavigate("/soil")}
                         className="text-green-600 text-sm font-medium hover:text-green-700 flex items-center gap-1"
                       >
-                        Get started <span>→</span>
+                        {t("landing.hero.getStarted")} <span>→</span>
                       </button>
                     </div>
                   </div>
@@ -227,7 +227,7 @@ const Dashboard = () => {
                         onClick={() => handleNavigate("/diagnosis")}
                         className="text-green-600 text-sm font-medium hover:text-green-700 flex items-center gap-1"
                       >
-                        Get started <span>→</span>
+                        {t("landing.hero.getStarted")} <span>→</span>
                       </button>
                     </div>
                   </div>
@@ -250,7 +250,7 @@ const Dashboard = () => {
                         onClick={() => handleNavigate("/community")}
                         className="text-green-600 text-sm font-medium hover:text-green-700 flex items-center gap-1"
                       >
-                        Get started <span>→</span>
+                        {t("landing.hero.getStarted")} <span>→</span>
                       </button>
                     </div>
                   </div>
@@ -280,7 +280,7 @@ const Dashboard = () => {
                       />
                       <div className="flex-1">
                         <p className="text-gray-900 text-sm font-medium">
-                          {activity.title}
+                          {t(activity.titleKey)}
                         </p>
                         <p className="text-gray-600 text-xs mt-1">
                           {activity.time}
