@@ -1,13 +1,16 @@
 import { useRef, useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import useAuth from "../hooks/useAuth";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import useInput from "../hooks/useInput";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 import axios from "../api/axios";
 
 const LOGIN_URL = "/auth";
 
 const Login = () => {
+  const { t } = useTranslation();
   const { setAuth, persist, setPersist } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -50,13 +53,13 @@ const Login = () => {
       navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
-        setErrMsg("No Server Response");
+        setErrMsg(t("login.errors.noServerResponse"));
       } else if (err.response?.status === 400) {
-        setErrMsg("Missing Username or Password");
+        setErrMsg(t("login.errors.missingCredentials"));
       } else if (err.response?.status === 401) {
-        setErrMsg("Unauthorized");
+        setErrMsg(t("login.errors.unauthorized"));
       } else {
-        setErrMsg("Login Failed");
+        setErrMsg(t("login.errors.loginFailed"));
       }
     }
   };
@@ -70,13 +73,18 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-16 relative">
+      {/* Language switcher in top-left */}
+      <div className="fixed top-6 left-6 z-50">
+        <LanguageSwitcher />
+      </div>
+
       {/* Fixed Landing button in the top-right corner */}
       <Link
         to="/"
         className="fixed top-6 right-6 z-50 text-green-400 hover:text-white border border-green-600 px-3 py-1 rounded-md bg-transparent hover:bg-green-600 transition"
         aria-label="Go to landing"
       >
-        Back
+        {t("common.back")}
       </Link>
       <div className="w-full max-w-xl px-6">
         <div className="flex flex-col items-center mb-8">
@@ -85,15 +93,13 @@ const Login = () => {
               <i className="fas fa-seedling"></i>
             </div>
             <span className="text-lg md:text-xl font-semibold text-gray-900">
-              SmartAgri
+              {t("common.appName")}
             </span>
           </div>
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
-            Sign in to your account
+            {t("login.title")}
           </h1>
-          <p className="text-sm text-gray-600 mt-2">
-            Welcome back to the future of farming
-          </p>
+          <p className="text-sm text-gray-600 mt-2">{t("login.subtitle")}</p>
         </div>
 
         <div className="mx-auto max-w-md">
@@ -101,7 +107,7 @@ const Login = () => {
             <h4 className="text-red-600 font-bold mb-3">{errMsg}</h4>
             <form onSubmit={handleSubmit}>
               <label className="block text-sm text-gray-300 mb-2">
-                Username
+                {t("login.username")}
               </label>
               <input
                 type="text"
@@ -109,17 +115,17 @@ const Login = () => {
                 ref={userRef}
                 autoComplete="off"
                 {...userAttribs}
-                placeholder="Enter your username"
+                placeholder={t("login.username")}
                 className="w-full mb-4 bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 rounded px-3 py-2 focus:outline-none focus:border-green-500"
               />
 
               <label className="block text-sm text-gray-300 mb-2">
-                Password
+                {t("login.password")}
               </label>
               <input
                 id="password"
                 type="password"
-                placeholder="Enter your password"
+                placeholder={t("login.password")}
                 onChange={(e) => setPwd(e.target.value)}
                 value={pwd}
                 className="w-full mb-6 bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 rounded px-3 py-2 focus:outline-none focus:border-green-500"
@@ -129,7 +135,7 @@ const Login = () => {
                 type="submit"
                 className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded-md mb-4 transition"
               >
-                Sign In
+                {t("login.signIn")}
               </button>
 
               <div className="flex items-center justify-between mb-2">
@@ -141,21 +147,15 @@ const Login = () => {
                     checked={persist}
                     className="h-4 w-4 text-green-500 rounded border-gray-300 bg-white"
                   />
-                  <span className="ml-2">Remember me</span>
+                  <span className="ml-2">{t("login.rememberMe")}</span>
                 </label>
-                <a
-                  href="#"
-                  className="text-sm text-gray-600 hover:text-gray-800"
-                >
-                  Forgot password ?
-                </a>
               </div>
             </form>
 
             <p className="text-center text-sm text-gray-400 mt-4">
-              Don't have an account?{" "}
+              {t("login.noAccount")}{" "}
               <Link to={"/register"} className="text-green-600 font-medium">
-                Sign up here
+                {t("login.signUp")}
               </Link>
             </p>
           </div>

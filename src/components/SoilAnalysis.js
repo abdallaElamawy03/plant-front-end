@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import useLogout from "../hooks/useLogout";
 import useAuth from "../hooks/useAuth";
 import { useState, useEffect } from "react";
@@ -6,6 +7,7 @@ import "./App.css";
 import UpperNav from "./UpperNav";
 
 const SoilAnalysis = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     ph: "",
     moisture: "",
@@ -40,7 +42,7 @@ const SoilAnalysis = () => {
       !formData.phosphorus ||
       !formData.potassium
     ) {
-      alert("Please fill in all fields");
+      alert(t("soilAnalysis.errors.fillAllFields"));
       return;
     }
 
@@ -83,11 +85,10 @@ const SoilAnalysis = () => {
           {/* Header Section */}
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold mb-4 text-gray-900">
-              Soil Analysis
+              {t("soilAnalysis.title")}
             </h1>
             <p className="text-gray-600 text-lg">
-              Get detailed insights about your soil health and personalized crop
-              recommendations.
+              {t("soilAnalysis.subtitle")}
             </p>
           </div>
 
@@ -103,7 +104,7 @@ const SoilAnalysis = () => {
                       htmlFor="ph"
                       className="block text-sm font-medium text-gray-700 mb-2"
                     >
-                      PH
+                      {t("soilAnalysis.form.ph")}
                     </label>
                     <input
                       type="number"
@@ -123,7 +124,7 @@ const SoilAnalysis = () => {
                       htmlFor="moisture"
                       className="block text-sm font-medium text-gray-700 mb-2"
                     >
-                      Moisture
+                      {t("soilAnalysis.form.moisture")}
                     </label>
                     <input
                       type="number"
@@ -147,7 +148,7 @@ const SoilAnalysis = () => {
                       htmlFor="nitrogen"
                       className="block text-sm font-medium text-gray-700 mb-2"
                     >
-                      Nitrogen
+                      {t("soilAnalysis.form.nitrogen")}
                     </label>
                     <input
                       type="number"
@@ -166,7 +167,7 @@ const SoilAnalysis = () => {
                       htmlFor="phosphorus"
                       className="block text-sm font-medium text-gray-700 mb-2"
                     >
-                      Phosphorus
+                      {t("soilAnalysis.form.phosphorus")}
                     </label>
                     <input
                       type="number"
@@ -189,7 +190,7 @@ const SoilAnalysis = () => {
                       htmlFor="potassium"
                       className="block text-sm font-medium text-gray-700 mb-2"
                     >
-                      Potassium
+                      {t("soilAnalysis.form.potassium")}
                     </label>
                     <input
                       type="number"
@@ -235,10 +236,10 @@ const SoilAnalysis = () => {
                           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                         ></path>
                       </svg>
-                      Analyzing...
+                      {t("soilAnalysis.form.analyzing")}
                     </>
                   ) : (
-                    "Analyze Soil"
+                    t("soilAnalysis.form.analyzeButton")
                   )}
                 </button>
               </form>

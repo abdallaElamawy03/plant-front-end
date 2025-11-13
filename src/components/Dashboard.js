@@ -2,10 +2,12 @@ import { useNavigate } from "react-router-dom";
 import useLogout from "../hooks/useLogout";
 import useAuth from "../hooks/useAuth";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import "./App.css";
 import UpperNav from "./UpperNav";
 
 const Dashboard = () => {
+  const { t } = useTranslation();
   const [stats, setStats] = useState({
     soilAnalyses: { count: 12, change: "+2 this month" },
     plantDiagnoses: { count: 8, change: "+1 this month" },
@@ -95,11 +97,10 @@ const Dashboard = () => {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold mb-2 text-gray-900">
-                Welcome back, {auth?.user || "John"} Farmer!
+                {t("dashboard.welcomeBack")}, {auth?.user || "John"}{" "}
+                {t("dashboard.farmer")}!
               </h1>
-              <p className="text-gray-600">
-                Here's what's happening on your farm today.
-              </p>
+              <p className="text-gray-600">{t("dashboard.subtitle")}</p>
             </div>
           </div>
 
@@ -109,7 +110,9 @@ const Dashboard = () => {
             <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-gray-600 text-sm mb-2">Soil Analyses</p>
+                  <p className="text-gray-600 text-sm mb-2">
+                    {t("dashboard.stats.soilAnalyses")}
+                  </p>
                   <p className="text-4xl font-bold text-gray-900">
                     {stats.soilAnalyses.count}
                   </p>
@@ -125,7 +128,9 @@ const Dashboard = () => {
             <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-gray-600 text-sm mb-2">Plant Diagnoses</p>
+                  <p className="text-gray-600 text-sm mb-2">
+                    {t("dashboard.stats.plantDiagnoses")}
+                  </p>
                   <p className="text-4xl font-bold text-gray-900">
                     {stats.plantDiagnoses.count}
                   </p>
@@ -141,7 +146,9 @@ const Dashboard = () => {
             <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-gray-600 text-sm mb-2">Community Posts</p>
+                  <p className="text-gray-600 text-sm mb-2">
+                    {t("dashboard.stats.communityPosts")}
+                  </p>
                   <p className="text-4xl font-bold text-gray-900">
                     {stats.communityPosts.count}
                   </p>
@@ -157,7 +164,9 @@ const Dashboard = () => {
             <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-gray-600 text-sm mb-2">Crops Monitored</p>
+                  <p className="text-gray-600 text-sm mb-2">
+                    {t("dashboard.stats.cropsMonitored")}
+                  </p>
                   <p className="text-4xl font-bold text-gray-900">
                     {stats.cropsMonitored.count}
                   </p>
@@ -175,7 +184,7 @@ const Dashboard = () => {
             {/* Quick Actions - Takes 2 columns */}
             <div className="lg:col-span-2">
               <h2 className="text-xl font-bold mb-4 text-gray-900">
-                Quick Actions
+                {t("dashboard.quickActions.title")}
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Soil Analysis Card */}
@@ -186,10 +195,10 @@ const Dashboard = () => {
                     </div>
                     <div className="flex-1">
                       <h3 className="font-semibold text-lg mb-1 text-gray-900">
-                        Soil Analysis
+                        {t("dashboard.quickActions.soilAnalysis.title")}
                       </h3>
                       <p className="text-gray-600 text-sm mb-3">
-                        Analyze your soil health
+                        {t("dashboard.quickActions.soilAnalysis.description")}
                       </p>
                       <button
                         onClick={() => handleNavigate("/soil")}
@@ -209,10 +218,10 @@ const Dashboard = () => {
                     </div>
                     <div className="flex-1">
                       <h3 className="font-semibold text-lg mb-1 text-gray-900">
-                        Disease Diagnosis
+                        {t("dashboard.quickActions.plantDiagnosis.title")}
                       </h3>
                       <p className="text-gray-600 text-sm mb-3">
-                        Identify plant diseases
+                        {t("dashboard.quickActions.plantDiagnosis.description")}
                       </p>
                       <button
                         onClick={() => handleNavigate("/diagnosis")}
@@ -232,10 +241,10 @@ const Dashboard = () => {
                     </div>
                     <div className="flex-1">
                       <h3 className="font-semibold text-lg mb-1 text-gray-900">
-                        Community
+                        {t("dashboard.quickActions.community.title")}
                       </h3>
                       <p className="text-gray-600 text-sm mb-3">
-                        Connect with farmers
+                        {t("dashboard.quickActions.community.description")}
                       </p>
                       <button
                         onClick={() => handleNavigate("/community")}
@@ -252,7 +261,7 @@ const Dashboard = () => {
             {/* Recent Activity - Takes 1 column */}
             <div>
               <h2 className="text-xl font-bold mb-4 text-gray-900">
-                Recent Activity
+                {t("dashboard.recentActivity.title")}
               </h2>
               <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm flex-1">
                 <div className="space-y-6">

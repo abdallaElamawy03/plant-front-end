@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import useLogout from "../hooks/useLogout";
 import useAuth from "../hooks/useAuth";
 import { useState, useEffect } from "react";
@@ -6,6 +7,7 @@ import "./App.css";
 import UpperNav from "./UpperNav";
 
 const PlantDiagnosis = () => {
+  const { t } = useTranslation();
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
@@ -17,11 +19,19 @@ const PlantDiagnosis = () => {
   const logout = useLogout();
 
   const symptoms = [
-    "Yellow Leaves",
-    "Spots on Leaves",
-    "Wilting",
-    "Stunted Growth",
-    "Mold/Fungus",
+    { key: "yellowLeaves", label: t("plantDiagnosis.symptoms.yellowLeaves") },
+    { key: "spots", label: t("plantDiagnosis.symptoms.spots") },
+    { key: "wilting", label: t("plantDiagnosis.symptoms.wilting") },
+    { key: "stuntedGrowth", label: t("plantDiagnosis.symptoms.stuntedGrowth") },
+    { key: "mold", label: t("plantDiagnosis.symptoms.mold") },
+    { key: "leafCurling", label: t("plantDiagnosis.symptoms.leafCurling") },
+    { key: "rootRot", label: t("plantDiagnosis.symptoms.rootRot") },
+    { key: "discoloration", label: t("plantDiagnosis.symptoms.discoloration") },
+    { key: "holes", label: t("plantDiagnosis.symptoms.holes") },
+    {
+      key: "droppingLeaves",
+      label: t("plantDiagnosis.symptoms.droppingLeaves"),
+    },
   ];
 
   const handleImageChange = (e) => {
@@ -29,14 +39,14 @@ const PlantDiagnosis = () => {
     if (file) {
       // Validate file size (10MB max)
       if (file.size > 10 * 1024 * 1024) {
-        alert("File size should not exceed 10MB");
+        alert(t("plantDiagnosis.errors.fileSizeLimit"));
         return;
       }
 
       // Validate file type
       const validTypes = ["image/png", "image/jpeg", "image/jpg"];
       if (!validTypes.includes(file.type)) {
-        alert("Please upload PNG, JPG, or JPEG images only");
+        alert(t("plantDiagnosis.errors.fileTypeError"));
         return;
       }
 
@@ -66,12 +76,12 @@ const PlantDiagnosis = () => {
 
     // Validate inputs
     if (!selectedImage) {
-      alert("Please upload a plant image");
+      alert(t("plantDiagnosis.errors.uploadImage"));
       return;
     }
 
     if (selectedSymptoms.length === 0) {
-      alert("Please select at least one symptom");
+      alert(t("plantDiagnosis.errors.selectSymptoms"));
       return;
     }
 
@@ -131,11 +141,10 @@ const PlantDiagnosis = () => {
           {/* Header Section */}
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold mb-4 text-gray-900">
-              Plant Disease Diagnosis
+              {t("plantDiagnosis.title")}
             </h1>
             <p className="text-gray-600 text-lg">
-              Upload images of your plants and describe symptoms for AI-powered
-              disease identification
+              {t("plantDiagnosis.subtitle")}
             </p>
           </div>
 
@@ -146,7 +155,7 @@ const PlantDiagnosis = () => {
               {/* Upload Section */}
               <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm">
                 <h3 className="text-lg font-semibold mb-4 text-gray-900">
-                  Upload Plant Image
+                  {t("plantDiagnosis.uploadSection.title")}
                 </h3>
 
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-12 text-center hover:border-gray-400 transition-colors">
@@ -177,10 +186,10 @@ const PlantDiagnosis = () => {
                         />
                       </svg>
                       <p className="text-gray-600 mb-2">
-                        Click to upload plant image
+                        {t("plantDiagnosis.uploadSection.clickToUpload")}
                       </p>
                       <p className="text-sm text-gray-500">
-                        PNG, JPG, JPEG up to 10MB
+                        {t("plantDiagnosis.uploadSection.fileTypes")}
                       </p>
                     </label>
                   ) : (
@@ -221,22 +230,22 @@ const PlantDiagnosis = () => {
               {/* Symptoms Section */}
               <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm">
                 <h3 className="text-lg font-semibold mb-4 text-gray-900">
-                  Select Symptoms
+                  {t("plantDiagnosis.symptomsSection.title")}
                 </h3>
 
                 <div className="space-y-3">
                   {symptoms.map((symptom) => (
                     <label
-                      key={symptom}
+                      key={symptom.key}
                       className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-3 rounded-lg transition-colors"
                     >
                       <input
                         type="checkbox"
-                        checked={selectedSymptoms.includes(symptom)}
-                        onChange={() => handleSymptomToggle(symptom)}
+                        checked={selectedSymptoms.includes(symptom.label)}
+                        onChange={() => handleSymptomToggle(symptom.label)}
                         className="w-5 h-5 text-green-600 bg-white border-gray-300 rounded focus:ring-green-500 focus:ring-2"
                       />
-                      <span className="text-gray-700">{symptom}</span>
+                      <span className="text-gray-700">{symptom.label}</span>
                     </label>
                   ))}
                 </div>
@@ -276,7 +285,7 @@ const PlantDiagnosis = () => {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       ></path>
                     </svg>
-                    Diagnosing...
+                    {t("plantDiagnosis.buttons.diagnosing")}
                   </>
                 ) : (
                   <>
@@ -293,7 +302,7 @@ const PlantDiagnosis = () => {
                         d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
-                    Diagnose Disease
+                    {t("plantDiagnosis.buttons.diagnose")}
                   </>
                 )}
               </button>

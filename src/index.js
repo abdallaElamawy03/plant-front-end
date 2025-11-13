@@ -6,6 +6,7 @@ import App from "./App";
 import { AuthProvider } from "./context/AuthProvider";
 import { ThemeProvider } from "./context/ThemeProvider";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./i18n";
 
 ReactDOM.render(
   <React.StrictMode>

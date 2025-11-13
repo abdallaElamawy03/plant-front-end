@@ -1,0 +1,273 @@
+{
+  "common": {
+    "appName": "SmartAgri",
+    "welcome": "Welcome",
+    "back": "Back",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "logout": "Logout",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "soilAnalysis": "Soil Analysis",
+    "diagnosis": "Diagnosis",
+    "community": "Community",
+    "profile": "Profile"
+  },
+  "landing": {
+    "hero": {
+      "title": "SmartAgri –",
+      "titleHighlight": "Smart Farming",
+      "titleEnd": "for a Smarter Future",
+      "subtitle": "Empowering farmers with AI-driven insights for soil health, plant care, and community collaboration. Join the agricultural revolution today.",
+      "getStarted": "Get Started",
+      "signIn": "Sign In"
+    },
+    "features": {
+      "soilAnalysis": {
+        "title": "Soil Analysis",
+        "description": "Get detailed soil health reports and crop recommendations based on scientific analysis"
+      },
+      "diseaseDiagnosis": {
+        "title": "Disease Diagnosis",
+        "description": "Identify plant diseases early with AI-powered image recognition and expert advice"
+      },
+      "communityNetwork": {
+        "title": "Community Network",
+        "description": "Connect with fellow farmers, share experiences, and learn from agricultural experts"
+      }
+    },
+    "stats": {
+      "farmersConnected": "Farmers Connected",
+      "accuracyRate": "Accuracy Rate",
+      "cropVarieties": "Crop Varieties",
+      "expertSupport": "Expert Support"
+    }
+  },
+  "login": {
+    "title": "Sign in to your account",
+    "subtitle": "Welcome back to the future of farming",
+    "username": "Username",
+    "password": "Password",
+    "rememberMe": "Trust This Device",
+    "signIn": "Sign In",
+    "noAccount": "Need an Account?",
+    "signUp": "Sign Up",
+    "errors": {
+      "noServerResponse": "No Server Response",
+      "missingCredentials": "Missing Username or Password",
+      "unauthorized": "Unauthorized",
+      "loginFailed": "Login Failed"
+    }
+  },
+  "register": {
+    "title": "Create your account",
+    "subtitle": "Join the future of farming today",
+    "username": "Username",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "phoneNumber": "Phone Number",
+    "country": "Country",
+    "city": "City / Governorate",
+    "selectCountry": "Select a country",
+    "selectCity": "Select city/governorate",
+    "createAccount": "Create Account",
+    "alreadyHaveAccount": "Already have an account?",
+    "instructions": {
+      "username": "4 to 24 characters. Must begin with a letter. Letters, numbers, underscores, hyphens allowed.",
+      "password": "8 to 24 characters. Must include uppercase and lowercase letters, a number and a special character.",
+      "confirmPassword": "Must match the password input field."
+    },
+    "errors": {
+      "noServerResponse": "No Server Response",
+      "usernameTaken": "Username Taken",
+      "registrationFailed": "Registration Failed"
+    }
+  },
+  "dashboard": {
+    "welcomeBack": "Welcome back,",
+    "farmer": "Farmer!",
+    "subtitle": "Here's your farm overview for today",
+    "stats": {
+      "soilAnalyses": "Soil Analyses",
+      "plantDiagnoses": "Plant Diagnoses",
+      "communityPosts": "Community Posts",
+      "cropsMonitored": "Crops Monitored",
+      "thisMonth": "this month"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "soilAnalysis": {
+        "title": "New Soil Analysis",
+        "description": "Test your soil health"
+      },
+      "plantDiagnosis": {
+        "title": "Diagnose Plant",
+        "description": "Check for diseases"
+      },
+      "community": {
+        "title": "Community Forum",
+        "description": "Connect with farmers"
+      },
+      "profile": {
+        "title": "My Profile",
+        "description": "View your profile"
+      }
+    },
+    "recentActivity": {
+      "title": "Recent Activity",
+      "soilCompleted": "Soil analysis completed",
+      "communityPost": "New community post",
+      "diseaseDiagnosed": "Plant disease diagnosed",
+      "cropRecommendation": "Crop recommendation received"
+    },
+    "weatherWidget": {
+      "title": "Today's Weather",
+      "temperature": "Temperature",
+      "humidity": "Humidity",
+      "wind": "Wind"
+    }
+  },
+  "soilAnalysis": {
+    "title": "Soil Analysis",
+    "subtitle": "Get detailed insights about your soil health and personalized crop recommendations.",
+    "form": {
+      "ph": "PH",
+      "moisture": "Moisture",
+      "nitrogen": "Nitrogen",
+      "phosphorus": "Phosphorus",
+      "potassium": "Potassium",
+      "analyzeButton": "Analyze Soil",
+      "analyzing": "Analyzing..."
+    },
+    "info": {
+      "title": "Why Soil Analysis Matters",
+      "items": [
+        "Optimizes crop yield and quality",
+        "Prevents nutrient deficiencies",
+        "Reduces fertilizer waste",
+        "Improves soil health over time"
+      ]
+    },
+    "tips": {
+      "title": "Analysis Tips",
+      "items": [
+        "Collect samples from multiple locations",
+        "Test at the same depth (6-8 inches)",
+        "Avoid recently fertilized areas",
+        "Perform analysis before planting season"
+      ]
+    },
+    "errors": {
+      "fillAllFields": "Please fill in all fields"
+    }
+  },
+  "plantDiagnosis": {
+    "title": "Plant Disease Diagnosis",
+    "subtitle": "Upload images of your plants and describe symptoms for AI-powered disease identification",
+    "uploadSection": {
+      "title": "Upload Plant Image",
+      "clickToUpload": "Click to upload plant image",
+      "fileTypes": "PNG, JPG, JPEG up to 10MB",
+      "changeImage": "Change Image"
+    },
+    "symptomsSection": {
+      "title": "Select Symptoms",
+      "description": "Choose all symptoms that apply to your plant"
+    },
+    "symptoms": {
+      "yellowLeaves": "Yellow Leaves",
+      "spots": "Spots on Leaves",
+      "wilting": "Wilting",
+      "stuntedGrowth": "Stunted Growth",
+      "mold": "Mold/Fungus",
+      "leafCurling": "Leaf Curling",
+      "rootRot": "Root Rot",
+      "discoloration": "Discoloration",
+      "holes": "Holes in Leaves",
+      "droppingLeaves": "Dropping Leaves"
+    },
+    "buttons": {
+      "diagnose": "Diagnose Plant",
+      "diagnosing": "Diagnosing...",
+      "newDiagnosis": "New Diagnosis"
+    },
+    "results": {
+      "title": "Diagnosis Results",
+      "disease": "Disease Identified",
+      "confidence": "Confidence",
+      "treatment": "Treatment",
+      "prevention": "Prevention Tips"
+    },
+    "errors": {
+      "uploadImage": "Please upload a plant image",
+      "selectSymptoms": "Please select at least one symptom",
+      "fileSizeLimit": "File size should not exceed 10MB",
+      "fileTypeError": "Please upload PNG, JPG, or JPEG images only"
+    }
+  },
+  "community": {
+    "title": "Community",
+    "postComposer": {
+      "placeholder": "Share your farming experience, ask questions, or post updates...",
+      "photo": "📷 Photo",
+      "video": "🎥 Video",
+      "post": "Post",
+      "posting": "Posting..."
+    },
+    "posts": {
+      "loading": "Loading posts...",
+      "noPosts": "No posts yet.",
+      "likes": "likes",
+      "comments": "comments"
+    },
+    "sidebar": {
+      "nearbyFarmers": "Nearby Farmers",
+      "comingSoon": "Coming soon...",
+      "communityStats": "Community Stats",
+      "activeFarmers": "Active Farmers",
+      "postsToday": "Posts Today",
+      "totalPosts": "Total Posts"
+    },
+    "errors": {
+      "postRequired": "Post title is required!",
+      "postFailed": "Failed to add post. Please try again."
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "memberSince": "Member since",
+    "stats": {
+      "soilAnalyses": "Soil Analyses",
+      "diagnoses": "Diagnoses",
+      "communityPosts": "Community Posts",
+      "yearsFarming": "Years Farming"
+    },
+    "sections": {
+      "currentCrops": "Current Crops",
+      "recentActivity": "Recent Activity",
+      "settings": "Settings"
+    },
+    "activity": {
+      "soilCompleted": "Completed soil analysis",
+      "communityPost": "Posted in community",
+      "diseaseDiagnosed": "Diagnosed plant disease",
+      "sharedTips": "Shared farming tips"
+    },
+    "cropStatus": {
+      "active": "Active",
+      "harvesting": "Harvesting",
+      "growing": "Growing"
+    }
+  },
+  "theme": {
+    "switchToLight": "Switch to light",
+    "switchToDark": "Switch to dark"
+  }
+}

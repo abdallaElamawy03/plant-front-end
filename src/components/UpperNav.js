@@ -1,10 +1,13 @@
 import React from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import useAuth from "../hooks/useAuth";
 import useLogout from "../hooks/useLogout";
 import useTheme from "../hooks/useTheme";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const UpperNav = () => {
+  const { t } = useTranslation();
   const { auth } = useAuth();
   const logout = useLogout();
   const navigate = useNavigate();
@@ -30,7 +33,7 @@ const UpperNav = () => {
             <i className="fas fa-seedling"></i>
           </div>
           <Link to="/" className="text-lg font-semibold">
-            SmartAgri
+            {t("common.appName")}
           </Link>
         </div>
 
@@ -41,7 +44,7 @@ const UpperNav = () => {
               `nav-link ${isActive ? "active-link" : ""}`
             }
           >
-            Dashboard
+            {t("nav.dashboard")}
           </NavLink>
 
           <NavLink
@@ -50,7 +53,7 @@ const UpperNav = () => {
               `nav-link ${isActive ? "active-link" : ""}`
             }
           >
-            Soil Analysis
+            {t("nav.soilAnalysis")}
           </NavLink>
 
           <NavLink
@@ -59,7 +62,7 @@ const UpperNav = () => {
               `nav-link ${isActive ? "active-link" : ""}`
             }
           >
-            Diagnosis
+            {t("nav.diagnosis")}
           </NavLink>
 
           <NavLink
@@ -68,7 +71,7 @@ const UpperNav = () => {
               `nav-link ${isActive ? "active-link" : ""}`
             }
           >
-            Community
+            {t("nav.community")}
           </NavLink>
 
           <NavLink
@@ -77,27 +80,35 @@ const UpperNav = () => {
               `nav-link ${isActive ? "active-link" : ""}`
             }
           >
-            Profile
+            {t("nav.profile")}
           </NavLink>
         </nav>
 
         <div className="flex items-center gap-4">
+          <LanguageSwitcher />
+
           <button
             onClick={toggleTheme}
             className="p-2 rounded-md bg-gray-100 text-gray-600 hover:bg-gray-200"
             aria-label="toggle-theme"
-            title={theme === "dark" ? "Switch to light" : "Switch to dark"}
+            title={
+              theme === "dark"
+                ? t("theme.switchToLight")
+                : t("theme.switchToDark")
+            }
           >
             <i className={theme === "dark" ? "fas fa-sun" : "fas fa-moon"}></i>
           </button>
 
           <div className="hidden sm:flex items-center gap-3">
-            <span className="text-sm text-gray-700">Welcome, {auth?.user}</span>
+            <span className="text-sm text-gray-700">
+              {t("common.welcome")}, {auth?.user}
+            </span>
             <button
               onClick={handleLogout}
               className="px-3 py-1 rounded-md border border-gray-200 text-sm text-gray-700 hover:bg-gray-50"
             >
-              Logout
+              {t("common.logout")}
             </button>
           </div>
         </div>

@@ -1,7 +1,9 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import "./App.css";
 import { Link } from "react-router-dom";
 import useTheme from "../hooks/useTheme";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Landing = () => {
   // keep original data arrays so functionality remains the same
@@ -38,6 +40,7 @@ const Landing = () => {
 
   // testimonials removed to match provided landing design (keeps functionality unchanged)
   const { theme, toggleTheme } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <div className="min-h-screen font-sans bg-white text-gray-900">
@@ -57,16 +60,22 @@ const Landing = () => {
                 <div className="w-10 h-10 bg-green-600 rounded-md flex items-center justify-center text-white">
                   <i className="fas fa-seedling"></i>
                 </div>
-                <span className="text-lg font-bold">SmartAgri</span>
+                <span className="text-lg font-bold">{t("common.appName")}</span>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
+              <LanguageSwitcher />
+
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-md bg-gray-100 text-gray-600 hover:bg-gray-200 hidden sm:inline-flex"
                 aria-label="toggle-theme"
-                title={theme === "dark" ? "Switch to light" : "Switch to dark"}
+                title={
+                  theme === "dark"
+                    ? t("theme.switchToLight")
+                    : t("theme.switchToDark")
+                }
               >
                 <i
                   className={theme === "dark" ? "fas fa-sun" : "fas fa-moon"}
@@ -76,14 +85,14 @@ const Landing = () => {
                 to="/login"
                 className="px-4 py-2 rounded-md bg-transparent border border-gray-200 text-gray-700 hover:bg-gray-50"
               >
-                Sign In
+                {t("common.signIn")}
               </Link>
 
               <Link
                 to="/register"
                 className="px-4 py-2 rounded-md bg-green-600 text-white hover:bg-green-700"
               >
-                Sign Up
+                {t("common.signUp")}
               </Link>
             </div>
           </div>
@@ -96,26 +105,26 @@ const Landing = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <h1 className="text-4xl md:text-5xl font-extrabold leading-tight text-gray-900">
-                SmartAgri –{" "}
-                <span className="text-green-600">Smart Farming</span>
-                for a Smarter Future
+                {t("landing.hero.title")}{" "}
+                <span className="text-green-600">
+                  {t("landing.hero.titleHighlight")}
+                </span>{" "}
+                {t("landing.hero.titleEnd")}
               </h1>
               <p className="text-lg text-gray-600 max-w-2xl">
-                Empowering farmers with AI-driven insights for soil health,
-                plant care, and community collaboration. Join the agricultural
-                revolution today.
+                {t("landing.hero.subtitle")}
               </p>
 
               <div className="flex flex-wrap gap-4 pt-4">
                 <Link to="/register">
                   <button className="bg-green-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-green-700 flex items-center gap-2">
-                    Get Started
+                    {t("landing.hero.getStarted")}
                     <i className="fas fa-arrow-right"></i>
                   </button>
                 </Link>
                 <Link to="/login">
                   <button className="px-6 py-3 rounded-md border border-gray-200 text-gray-700 hover:bg-gray-50">
-                    Sign In
+                    {t("landing.hero.signIn")}
                   </button>
                 </Link>
               </div>

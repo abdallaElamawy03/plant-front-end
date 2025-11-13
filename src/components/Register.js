@@ -7,12 +7,15 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "../api/axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Company_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = "/users";
 
 const Register = () => {
+  const { t } = useTranslation();
   const userRef = useRef();
   const errRef = useRef();
   const navigate = useNavigate();
@@ -135,11 +138,11 @@ const Register = () => {
       setMatchPwd("");
     } catch (err) {
       if (!err?.response) {
-        setErrMsg("No Server Response");
+        setErrMsg(t("register.errors.noServerResponse"));
       } else if (err.response?.status === 409) {
-        setErrMsg("Username Taken");
+        setErrMsg(t("register.errors.usernameTaken"));
       } else {
-        setErrMsg("Registration Failed");
+        setErrMsg(t("register.errors.registrationFailed"));
       }
       // errRef.current.focus();
     }
@@ -147,13 +150,18 @@ const Register = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-16 relative">
+      {/* Fixed LanguageSwitcher in the top-left corner */}
+      <div className="fixed top-6 left-6 z-50">
+        <LanguageSwitcher />
+      </div>
+
       {/* Fixed Landing button in the top-right corner */}
       <Link
         to="/"
         className="fixed top-6 right-6 z-50 text-green-400 hover:text-white border border-green-600 px-3 py-1 rounded-md bg-transparent hover:bg-green-600 transition"
         aria-label="Go to landing"
       >
-        Back
+        {t("common.back")}
       </Link>
       <div className="w-full max-w-xl px-6">
         <div className="flex flex-col items-center mb-8">
@@ -162,15 +170,13 @@ const Register = () => {
               <i className="fas fa-seedling"></i>
             </div>
             <span className="text-lg md:text-xl font-semibold text-gray-900">
-              SmartAgri
+              {t("common.appName")}
             </span>
           </div>
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
-            Create your account
+            {t("register.title")}
           </h1>
-          <p className="text-sm text-gray-600 mt-2">
-            Join the future of smart farming
-          </p>
+          <p className="text-sm text-gray-600 mt-2">{t("register.subtitle")}</p>
         </div>
 
         <div className="mx-auto max-w-md">
@@ -178,24 +184,24 @@ const Register = () => {
             <h4 className="text-red-600 font-bold mb-3">{errMsg}</h4>
             <form onSubmit={handleSubmit}>
               <label className="block text-sm text-gray-300 mb-2">
-                username
+                {t("register.username")}
               </label>
               <input
                 type="text"
                 id="user"
-                placeholder="Enter your full name"
+                placeholder={t("register.instructions.username")}
                 value={user}
                 onChange={(e) => set_user(e.target.value)}
                 className="w-full mb-4 bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 rounded px-3 py-2 focus:outline-none focus:border-green-500"
               />
 
               <label className="block text-sm text-gray-300 mb-2">
-                Password
+                {t("register.password")}
               </label>
               <input
                 id="password"
                 type="password"
-                placeholder="Create a password"
+                placeholder={t("register.instructions.password")}
                 ref={userRef}
                 autoComplete="off"
                 required
@@ -205,12 +211,12 @@ const Register = () => {
               />
 
               <label className="block text-sm text-gray-300 mb-2">
-                Confirm Password
+                {t("register.confirmPassword")}
               </label>
               <input
                 id="confirm_pwd"
                 type="password"
-                placeholder="Confirm your password"
+                placeholder={t("register.instructions.confirmPassword")}
                 onChange={(e) => setMatchPwd(e.target.value)}
                 value={matchPwd}
                 required
@@ -219,7 +225,7 @@ const Register = () => {
 
               {/* Phone number */}
               <label className="block text-sm text-gray-300 mb-2">
-                Phone Number
+                {t("register.phoneNumber")}
               </label>
               <div className="flex items-center mb-6">
                 <input
@@ -241,7 +247,7 @@ const Register = () => {
 
               {/* Country */}
               <label className="block text-sm text-gray-300 mb-2">
-                Country
+                {t("register.country")}
               </label>
               <select
                 value={country}
@@ -252,7 +258,7 @@ const Register = () => {
                 required
                 className="w-full mb-6 bg-gray-50 border border-gray-200 text-gray-900 rounded px-3 py-2 focus:outline-none focus:border-green-500"
               >
-                <option value="">Select Country</option>
+                <option value="">{t("register.selectCountry")}</option>
                 {countries.map((c) => (
                   <option key={c.name} value={c.name}>
                     {c.name}
@@ -261,7 +267,9 @@ const Register = () => {
               </select>
 
               {/* City */}
-              <label className="block text-sm text-gray-300 mb-2">City</label>
+              <label className="block text-sm text-gray-300 mb-2">
+                {t("register.city")}
+              </label>
               {country === "Egypt" ? (
                 <select
                   value={city}
@@ -269,7 +277,7 @@ const Register = () => {
                   required
                   className="w-full mb-6 bg-gray-50 border border-gray-200 text-gray-900 rounded px-3 py-2 focus:outline-none focus:border-green-500"
                 >
-                  <option value="">Select Governorate</option>
+                  <option value="">{t("register.selectCity")}</option>
                   {egyptGovernorates.map((gov) => (
                     <option key={gov} value={gov}>
                       {gov}
@@ -291,14 +299,14 @@ const Register = () => {
                 type="submit"
                 className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded-md mb-4 transition"
               >
-                Create Account
+                {t("register.createAccount")}
               </button>
             </form>
 
             <p className="text-center text-sm text-gray-400 mt-4">
-              Already have an account?{" "}
-              <Link to={"/login"} className="text-green-400 font-medium">
-                Sign in here
+              {t("register.alreadyHaveAccount")}{" "}
+              <Link to="/login" className="text-green-400 font-medium">
+                {t("common.signIn")}
               </Link>
             </p>
           </div>

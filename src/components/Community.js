@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import useLogout from "../hooks/useLogout";
 import useAuth from "../hooks/useAuth";
 import { useState, useEffect } from "react";
@@ -7,6 +8,7 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import UpperNav from "./UpperNav";
 
 const Community = () => {
+  const { t } = useTranslation();
   const [posts, setPosts] = useState([]);
   const [title, setTitle] = useState(""); // ✅ track input
   const [loading, setLoading] = useState(false);
@@ -56,7 +58,7 @@ const Community = () => {
   // 🔹 Add post
   const addPost = async () => {
     if (!title.trim()) {
-      alert("Post title is required!");
+      alert(t("community.errors.postRequired"));
       return;
     }
 
@@ -83,7 +85,7 @@ const Community = () => {
       setTitle(""); // ✅ clear textarea
     } catch (err) {
       console.error("Error adding post:", err);
-      alert("Failed to add post. Please try again.");
+      alert(t("community.errors.postFailed"));
     } finally {
       setLoading(false);
     }
@@ -106,7 +108,7 @@ const Community = () => {
               <div className="bg-white border border-gray-200 rounded-xl p-6 mb-6 shadow-sm">
                 <textarea
                   rows={3}
-                  placeholder="Share your farming experience, ask questions, or post updates..."
+                  placeholder={t("community.postComposer.placeholder")}
                   className="w-full bg-white border border-gray-200 rounded-md px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -114,10 +116,10 @@ const Community = () => {
                 <div className="flex items-center justify-between mt-4">
                   <div className="text-sm text-gray-600 space-x-4">
                     <button className="text-gray-600 hover:text-gray-800">
-                      📷 Photo
+                      {t("community.postComposer.photo")}
                     </button>
                     <button className="text-gray-600 hover:text-gray-800">
-                      🎥 Video
+                      {t("community.postComposer.video")}
                     </button>
                   </div>
                   <button
@@ -127,7 +129,9 @@ const Community = () => {
                       loading ? "bg-green-400" : "bg-green-600"
                     } px-4 py-2 rounded-md text-white`}
                   >
-                    {loading ? "Posting..." : "Post"}
+                    {loading
+                      ? t("community.postComposer.posting")
+                      : t("community.postComposer.post")}
                   </button>
                 </div>
               </div>
@@ -137,7 +141,7 @@ const Community = () => {
                 <div className="lg:col-span-2 space-y-6">
                   {loading && posts.length === 0 ? (
                     <div className="text-gray-500 text-center py-10">
-                      Loading posts...
+                      {t("community.posts.loading")}
                     </div>
                   ) : posts.length > 0 ? (
                     posts.map((post, i) => (
@@ -171,7 +175,7 @@ const Community = () => {
                     ))
                   ) : (
                     <div className="text-gray-500 text-center py-10">
-                      No posts yet.
+                      {t("community.posts.noPosts")}
                     </div>
                   )}
                 </div>
@@ -180,22 +184,24 @@ const Community = () => {
                 <aside className="space-y-6">
                   <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
                     <h3 className="text-gray-900 font-semibold mb-4">
-                      Nearby Farmers
+                      {t("community.sidebar.nearbyFarmers")}
                     </h3>
-                    <p className="text-sm text-gray-600">Coming soon...</p>
+                    <p className="text-sm text-gray-600">
+                      {t("community.sidebar.comingSoon")}
+                    </p>
                   </div>
 
                   <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
                     <h3 className="text-gray-900 font-semibold mb-4">
-                      Community Stats
+                      {t("community.sidebar.communityStats")}
                     </h3>
                     <div className="text-gray-700 text-sm space-y-3">
                       <div className="flex justify-between">
-                        <span>Active Farmers</span>
+                        <span>{t("community.sidebar.activeFarmers")}</span>
                         <span className="font-semibold">1,247</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Posts Today</span>
+                        <span>{t("community.sidebar.postsToday")}</span>
                         <span className="font-semibold">89</span>
                       </div>
                       <div className="flex justify-between">

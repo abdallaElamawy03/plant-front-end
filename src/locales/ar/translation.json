@@ -1,0 +1,273 @@
+{
+  "common": {
+    "appName": "سمارت أجري",
+    "welcome": "مرحباً",
+    "back": "رجوع",
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "logout": "تسجيل الخروج",
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "loading": "جارٍ التحميل...",
+    "error": "خطأ",
+    "success": "نجح"
+  },
+  "nav": {
+    "dashboard": "لوحة التحكم",
+    "soilAnalysis": "تحليل التربة",
+    "diagnosis": "التشخيص",
+    "community": "المجتمع",
+    "profile": "الملف الشخصي"
+  },
+  "landing": {
+    "hero": {
+      "title": "سمارت أجري –",
+      "titleHighlight": "الزراعة الذكية",
+      "titleEnd": "لمستقبل أذكى",
+      "subtitle": "تمكين المزارعين من خلال رؤى مدعومة بالذكاء الاصطناعي لصحة التربة ورعاية النباتات والتعاون المجتمعي. انضم إلى الثورة الزراعية اليوم.",
+      "getStarted": "ابدأ الآن",
+      "signIn": "تسجيل الدخول"
+    },
+    "features": {
+      "soilAnalysis": {
+        "title": "تحليل التربة",
+        "description": "احصل على تقارير مفصلة عن صحة التربة وتوصيات المحاصيل بناءً على التحليل العلمي"
+      },
+      "diseaseDiagnosis": {
+        "title": "تشخيص الأمراض",
+        "description": "تحديد أمراض النباتات مبكراً باستخدام التعرف على الصور المدعوم بالذكاء الاصطناعي والمشورة من الخبراء"
+      },
+      "communityNetwork": {
+        "title": "شبكة المجتمع",
+        "description": "تواصل مع المزارعين الزملاء، وشارك الخبرات، وتعلم من خبراء الزراعة"
+      }
+    },
+    "stats": {
+      "farmersConnected": "مزارع متصل",
+      "accuracyRate": "معدل الدقة",
+      "cropVarieties": "أنواع المحاصيل",
+      "expertSupport": "دعم الخبراء"
+    }
+  },
+  "login": {
+    "title": "تسجيل الدخول إلى حسابك",
+    "subtitle": "مرحبًا بعودتك إلى مستقبل الزراعة",
+    "username": "اسم المستخدم",
+    "password": "كلمة المرور",
+    "rememberMe": "ثق في هذا الجهاز",
+    "signIn": "تسجيل الدخول",
+    "noAccount": "تحتاج إلى حساب؟",
+    "signUp": "إنشاء حساب",
+    "errors": {
+      "noServerResponse": "لا يوجد استجابة من الخادم",
+      "missingCredentials": "اسم المستخدم أو كلمة المرور مفقودة",
+      "unauthorized": "غير مصرح",
+      "loginFailed": "فشل تسجيل الدخول"
+    }
+  },
+  "register": {
+    "title": "إنشاء حسابك",
+    "subtitle": "انضم إلى مستقبل الزراعة اليوم",
+    "username": "اسم المستخدم",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "phoneNumber": "رقم الهاتف",
+    "country": "الدولة",
+    "city": "المدينة / المحافظة",
+    "selectCountry": "اختر دولة",
+    "selectCity": "اختر المدينة/المحافظة",
+    "createAccount": "إنشاء حساب",
+    "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+    "instructions": {
+      "username": "من 4 إلى 24 حرفًا. يجب أن تبدأ بحرف. يُسمح بالأحرف والأرقام والشرطات السفلية والشرطات.",
+      "password": "من 8 إلى 24 حرفًا. يجب أن تتضمن أحرفًا كبيرة وصغيرة ورقمًا وحرفًا خاصًا.",
+      "confirmPassword": "يجب أن تتطابق مع حقل إدخال كلمة المرور."
+    },
+    "errors": {
+      "noServerResponse": "لا يوجد استجابة من الخادم",
+      "usernameTaken": "اسم المستخدم مأخوذ",
+      "registrationFailed": "فشل التسجيل"
+    }
+  },
+  "dashboard": {
+    "welcomeBack": "مرحبًا بعودتك،",
+    "farmer": "أيها المزارع!",
+    "subtitle": "إليك نظرة عامة على مزرعتك اليوم",
+    "stats": {
+      "soilAnalyses": "تحليلات التربة",
+      "plantDiagnoses": "تشخيصات النباتات",
+      "communityPosts": "منشورات المجتمع",
+      "cropsMonitored": "المحاصيل المراقبة",
+      "thisMonth": "هذا الشهر"
+    },
+    "quickActions": {
+      "title": "إجراءات سريعة",
+      "soilAnalysis": {
+        "title": "تحليل تربة جديد",
+        "description": "اختبر صحة تربتك"
+      },
+      "plantDiagnosis": {
+        "title": "تشخيص النبات",
+        "description": "تحقق من الأمراض"
+      },
+      "community": {
+        "title": "منتدى المجتمع",
+        "description": "تواصل مع المزارعين"
+      },
+      "profile": {
+        "title": "ملفي الشخصي",
+        "description": "عرض ملفك الشخصي"
+      }
+    },
+    "recentActivity": {
+      "title": "النشاط الأخير",
+      "soilCompleted": "اكتمل تحليل التربة",
+      "communityPost": "منشور جديد في المجتمع",
+      "diseaseDiagnosed": "تم تشخيص مرض النبات",
+      "cropRecommendation": "تم استلام توصية المحصول"
+    },
+    "weatherWidget": {
+      "title": "طقس اليوم",
+      "temperature": "درجة الحرارة",
+      "humidity": "الرطوبة",
+      "wind": "الرياح"
+    }
+  },
+  "soilAnalysis": {
+    "title": "تحليل التربة",
+    "subtitle": "احصل على رؤى مفصلة حول صحة تربتك وتوصيات محاصيل مخصصة.",
+    "form": {
+      "ph": "الأس الهيدروجيني",
+      "moisture": "الرطوبة",
+      "nitrogen": "النيتروجين",
+      "phosphorus": "الفوسفور",
+      "potassium": "البوتاسيوم",
+      "analyzeButton": "تحليل التربة",
+      "analyzing": "جارٍ التحليل..."
+    },
+    "info": {
+      "title": "لماذا يهم تحليل التربة",
+      "items": [
+        "يحسن إنتاج المحاصيل وجودتها",
+        "يمنع نقص المغذيات",
+        "يقلل من هدر الأسمدة",
+        "يحسن صحة التربة مع مرور الوقت"
+      ]
+    },
+    "tips": {
+      "title": "نصائح للتحليل",
+      "items": [
+        "اجمع العينات من مواقع متعددة",
+        "اختبر على نفس العمق (6-8 بوصات)",
+        "تجنب المناطق المخصبة مؤخرًا",
+        "أجرِ التحليل قبل موسم الزراعة"
+      ]
+    },
+    "errors": {
+      "fillAllFields": "يرجى ملء جميع الحقول"
+    }
+  },
+  "plantDiagnosis": {
+    "title": "تشخيص أمراض النباتات",
+    "subtitle": "قم بتحميل صور نباتاتك ووصف الأعراض للحصول على تحديد الأمراض المدعوم بالذكاء الاصطناعي",
+    "uploadSection": {
+      "title": "تحميل صورة النبات",
+      "clickToUpload": "انقر لتحميل صورة النبات",
+      "fileTypes": "PNG، JPG، JPEG حتى 10 ميجابايت",
+      "changeImage": "تغيير الصورة"
+    },
+    "symptomsSection": {
+      "title": "اختر الأعراض",
+      "description": "اختر جميع الأعراض التي تنطبق على نباتك"
+    },
+    "symptoms": {
+      "yellowLeaves": "أوراق صفراء",
+      "spots": "بقع على الأوراق",
+      "wilting": "ذبول",
+      "stuntedGrowth": "نمو متقزم",
+      "mold": "عفن/فطريات",
+      "leafCurling": "تجعيد الأوراق",
+      "rootRot": "تعفن الجذور",
+      "discoloration": "تغير اللون",
+      "holes": "ثقوب في الأوراق",
+      "droppingLeaves": "سقوط الأوراق"
+    },
+    "buttons": {
+      "diagnose": "تشخيص النبات",
+      "diagnosing": "جارٍ التشخيص...",
+      "newDiagnosis": "تشخيص جديد"
+    },
+    "results": {
+      "title": "نتائج التشخيص",
+      "disease": "المرض المحدد",
+      "confidence": "الثقة",
+      "treatment": "العلاج",
+      "prevention": "نصائح الوقاية"
+    },
+    "errors": {
+      "uploadImage": "يرجى تحميل صورة النبات",
+      "selectSymptoms": "يرجى اختيار عرض واحد على الأقل",
+      "fileSizeLimit": "يجب ألا يتجاوز حجم الملف 10 ميجابايت",
+      "fileTypeError": "يرجى تحميل صور PNG أو JPG أو JPEG فقط"
+    }
+  },
+  "community": {
+    "title": "المجتمع",
+    "postComposer": {
+      "placeholder": "شارك تجربتك الزراعية، اطرح الأسئلة، أو انشر التحديثات...",
+      "photo": "📷 صورة",
+      "video": "🎥 فيديو",
+      "post": "نشر",
+      "posting": "جارٍ النشر..."
+    },
+    "posts": {
+      "loading": "جارٍ تحميل المنشورات...",
+      "noPosts": "لا توجد منشورات بعد.",
+      "likes": "إعجابات",
+      "comments": "تعليقات"
+    },
+    "sidebar": {
+      "nearbyFarmers": "المزارعون القريبون",
+      "comingSoon": "قريباً...",
+      "communityStats": "إحصائيات المجتمع",
+      "activeFarmers": "المزارعون النشطون",
+      "postsToday": "منشورات اليوم",
+      "totalPosts": "إجمالي المنشورات"
+    },
+    "errors": {
+      "postRequired": "عنوان المنشور مطلوب!",
+      "postFailed": "فشل إضافة المنشور. يرجى المحاولة مرة أخرى."
+    }
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "memberSince": "عضو منذ",
+    "stats": {
+      "soilAnalyses": "تحليلات التربة",
+      "diagnoses": "التشخيصات",
+      "communityPosts": "منشورات المجتمع",
+      "yearsFarming": "سنوات الزراعة"
+    },
+    "sections": {
+      "currentCrops": "المحاصيل الحالية",
+      "recentActivity": "النشاط الأخير",
+      "settings": "الإعدادات"
+    },
+    "activity": {
+      "soilCompleted": "أكمل تحليل التربة",
+      "communityPost": "نشر في المجتمع",
+      "diseaseDiagnosed": "شخص مرض النبات",
+      "sharedTips": "شارك نصائح الزراعة"
+    },
+    "cropStatus": {
+      "active": "نشط",
+      "harvesting": "الحصاد",
+      "growing": "النمو"
+    }
+  },
+  "theme": {
+    "switchToLight": "التبديل إلى الوضع الفاتح",
+    "switchToDark": "التبديل إلى الوضع الداكن"
+  }
+}
