@@ -156,7 +156,7 @@ const Community = () => {
                             <div className="text-sm text-gray-500">
                               {post?.user?.city || "Unknown country"} •{" "}
                               {post?.post_date
-                                ? new Date(post.createdAt).toLocaleString()
+                                ? new Date(post.post_date).toLocaleString()
                                 : "Recently"}
                             </div>
                           </div>
