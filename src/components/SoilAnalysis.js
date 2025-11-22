@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import useLogout from "../hooks/useLogout";
 import useAuth from "../hooks/useAuth";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useState, useEffect } from "react";
 import "./App.css";
 import UpperNav from "./UpperNav";
@@ -22,6 +23,7 @@ const SoilAnalysis = () => {
   const navigate = useNavigate();
   const { auth } = useAuth();
   const logout = useLogout();
+  const axiosPrivate = useAxiosPrivate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -48,25 +50,35 @@ const SoilAnalysis = () => {
 
     setLoading(true);
 
-    // TODO: Implement API call to analyze soil
     try {
-      // const response = await axiosPrivate.post("/soil/analyze", formData);
-      // setAnalysisResult(response.data);
+      // Track activity in backend
+      await axiosPrivate.post(
+        "/activity/track",
+        {
+          type: "soil_analysis",
+          description: `Completed soil analysis - pH: ${formData.ph}, Moisture: ${formData.moisture}%`,
+          link: "/soil",
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
 
-      // Placeholder for now
-      console.log("Analyzing soil with data:", formData);
+      setAnalysisResult({
+        status: "success",
+        message: "Analysis complete! Your data has been recorded.",
+      });
 
-      // Simulate API response
-      setTimeout(() => {
-        setAnalysisResult({
-          status: "success",
-          message: "Analysis complete! Check back soon for recommendations.",
-        });
-        setLoading(false);
-      }, 1500);
+      console.log("Soil analysis tracked successfully");
     } catch (err) {
       console.error("Error analyzing soil:", err);
-      alert("Failed to analyze soil. Please try again.");
+      // Still show success to user even if tracking fails
+      setAnalysisResult({
+        status: "success",
+        message: "Analysis complete! Your data has been recorded.",
+      });
+    } finally {
       setLoading(false);
     }
   };

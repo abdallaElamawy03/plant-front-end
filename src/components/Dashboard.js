@@ -1,6 +1,7 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import useLogout from "../hooks/useLogout";
 import useAuth from "../hooks/useAuth";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import "./App.css";
@@ -9,74 +10,119 @@ import UpperNav from "./UpperNav";
 const Dashboard = () => {
   const { t } = useTranslation();
   const [stats, setStats] = useState({
-    soilAnalyses: { count: 12, change: "+2" },
-    plantDiagnoses: { count: 8, change: "+1" },
-    communityPosts: { count: 23, change: "+5" },
-    cropsMonitored: { count: 6, change: "+1" },
+    soilAnalyses: { count: 0, change: "+0" },
+    plantDiagnoses: { count: 0, change: "+0" },
+    communityPosts: { count: 0, change: "+0" },
   });
 
-  const [recentActivity, setRecentActivity] = useState([
-    {
-      id: 1,
-      type: "soil",
-      titleKey: "dashboard.recentActivity.soilCompleted",
-      time: "2 hours ago",
-      color: "blue",
-    },
-    {
-      id: 2,
-      type: "community",
-      titleKey: "dashboard.recentActivity.communityPost",
-      time: "1 day ago",
-      color: "green",
-    },
-    {
-      id: 3,
-      type: "disease",
-      titleKey: "dashboard.recentActivity.diseaseDiagnosed",
-      time: "2 days ago",
-      color: "orange",
-    },
-    {
-      id: 4,
-      type: "crop",
-      titleKey: "dashboard.recentActivity.cropRecommendation",
-      time: "3 days ago",
-      color: "purple",
-    },
-  ]);
+  const [recentActivity, setRecentActivity] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+  const location = useLocation();
   const { auth } = useAuth();
   const logout = useLogout();
+  const axiosPrivate = useAxiosPrivate();
 
-  // TODO: Fetch dashboard stats
+  // Fetch dashboard stats and recent activity
   useEffect(() => {
-    // Placeholder for fetching dashboard statistics
-    // const fetchDashboardStats = async () => {
-    //   try {
-    //     const response = await axiosPrivate.get("/dashboard/stats");
-    //     setStats(response.data);
-    //   } catch (err) {
-    //     console.error("Error fetching stats:", err);
-    //   }
-    // };
-    // fetchDashboardStats();
-  }, []);
+    let isMounted = true;
+    const controller = new AbortController();
 
-  // TODO: Fetch recent activity
-  useEffect(() => {
-    // Placeholder for fetching recent activity
-    // const fetchRecentActivity = async () => {
-    //   try {
-    //     const response = await axiosPrivate.get("/dashboard/activity");
-    //     setRecentActivity(response.data);
-    //   } catch (err) {
-    //     console.error("Error fetching activity:", err);
-    //   }
-    // };
-    // fetchRecentActivity();
-  }, []);
+    const fetchDashboardData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const response = await axiosPrivate.get("/stats/dashboard", {
+          signal: controller.signal,
+        });
+
+        if (isMounted && response?.data) {
+          const { stats: apiStats, recentActivities } = response.data;
+
+          setStats({
+            soilAnalyses: {
+              count: apiStats.soilAnalysisCount || 0,
+              change: "+0",
+            },
+            plantDiagnoses: {
+              count: apiStats.plantDiagnosisCount || 0,
+              change: "+0",
+            },
+            communityPosts: {
+              count: apiStats.communityPostsCount || 0,
+              change: "+0",
+            },
+          });
+
+          // Map activities to display format
+          const mappedActivities = recentActivities.map((activity) => ({
+            id: activity.id,
+            type: activity.type,
+            description: activity.description,
+            time: formatTimeAgo(new Date(activity.timestamp)),
+            color: getActivityColor(activity.type),
+            link: activity.link,
+          }));
+
+          setRecentActivity(mappedActivities);
+        }
+      } catch (err) {
+        console.error("Error fetching dashboard data:", err);
+        if (err.name !== "AbortError" && err.name !== "CanceledError") {
+          setError("Failed to load dashboard data");
+          // Don't redirect on error, just show error state
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchDashboardData();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, [axiosPrivate]);
+
+  // Helper function to format time ago
+  const formatTimeAgo = (date) => {
+    const seconds = Math.floor((new Date() - date) / 1000);
+
+    const intervals = {
+      year: 31536000,
+      month: 2592000,
+      week: 604800,
+      day: 86400,
+      hour: 3600,
+      minute: 60,
+    };
+
+    for (const [unit, secondsInUnit] of Object.entries(intervals)) {
+      const interval = Math.floor(seconds / secondsInUnit);
+      if (interval >= 1) {
+        return `${interval} ${unit}${interval > 1 ? "s" : ""} ago`;
+      }
+    }
+    return "Just now";
+  };
+
+  // Helper function to get activity color
+  const getActivityColor = (type) => {
+    const colorMap = {
+      soil_analysis: "blue",
+      plant_diagnosis: "orange",
+      community_post: "green",
+      comment: "purple",
+      like: "pink",
+    };
+    return colorMap[type] || "gray";
+  };
 
   const handleNavigate = (path) => {
     navigate(path);
@@ -105,7 +151,7 @@ const Dashboard = () => {
           </div>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {/* Soil Analyses Card */}
             <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
               <div className="flex items-start justify-between">
@@ -157,24 +203,6 @@ const Dashboard = () => {
               <p className="text-green-600 text-sm mt-4 flex items-center gap-1">
                 <span>↗</span>
                 {stats.communityPosts.change} {t("dashboard.stats.thisMonth")}
-              </p>
-            </div>
-
-            {/* Crops Monitored Card */}
-            <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-gray-600 text-sm mb-2">
-                    {t("dashboard.stats.cropsMonitored")}
-                  </p>
-                  <p className="text-4xl font-bold text-gray-900">
-                    {stats.cropsMonitored.count}
-                  </p>
-                </div>
-              </div>
-              <p className="text-green-600 text-sm mt-4 flex items-center gap-1">
-                <span>↗</span>
-                {stats.cropsMonitored.change} {t("dashboard.stats.thisMonth")}
               </p>
             </div>
           </div>
@@ -264,31 +292,47 @@ const Dashboard = () => {
                 {t("dashboard.recentActivity.title")}
               </h2>
               <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm flex-1">
-                <div className="space-y-6">
-                  {recentActivity.map((activity) => (
-                    <div key={activity.id} className="flex items-start gap-3">
-                      <div
-                        className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
-                          activity.color === "blue"
-                            ? "bg-blue-500"
-                            : activity.color === "green"
-                            ? "bg-green-500"
-                            : activity.color === "orange"
-                            ? "bg-orange-500"
-                            : "bg-purple-500"
-                        }`}
-                      />
-                      <div className="flex-1">
-                        <p className="text-gray-900 text-sm font-medium">
-                          {t(activity.titleKey)}
-                        </p>
-                        <p className="text-gray-600 text-xs mt-1">
-                          {activity.time}
-                        </p>
+                {loading ? (
+                  <div className="text-center text-gray-500 py-8">
+                    Loading...
+                  </div>
+                ) : error ? (
+                  <div className="text-center text-red-500 py-8">{error}</div>
+                ) : recentActivity.length === 0 ? (
+                  <div className="text-center text-gray-500 py-8">
+                    No recent activity
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {recentActivity.map((activity) => (
+                      <div key={activity.id} className="flex items-start gap-3">
+                        <div
+                          className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
+                            activity.color === "blue"
+                              ? "bg-blue-500"
+                              : activity.color === "green"
+                              ? "bg-green-500"
+                              : activity.color === "orange"
+                              ? "bg-orange-500"
+                              : activity.color === "purple"
+                              ? "bg-purple-500"
+                              : activity.color === "pink"
+                              ? "bg-pink-500"
+                              : "bg-gray-500"
+                          }`}
+                        />
+                        <div className="flex-1">
+                          <p className="text-gray-900 text-sm font-medium">
+                            {activity.description}
+                          </p>
+                          <p className="text-gray-600 text-xs mt-1">
+                            {activity.time}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
