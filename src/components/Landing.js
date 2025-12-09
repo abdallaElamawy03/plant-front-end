@@ -31,7 +31,6 @@ const Landing = () => {
     },
   ];
 
-  // testimonials removed to match provided landing design (keeps functionality unchanged)
   const { theme, toggleTheme } = useTheme();
   const { t } = useTranslation();
 
@@ -124,7 +123,7 @@ const Landing = () => {
                 {t("landing.hero.title")}{" "}
                 <span className="text-green-600">
                   {t("landing.hero.titleHighlight")}
-                </span>{" "}
+                </span>
                 {t("landing.hero.titleEnd")}
               </h1>
               <p className="text-lg text-gray-600 max-w-2xl">
@@ -147,22 +146,43 @@ const Landing = () => {
             </div>
 
             <div className="relative">
-              <div className="w-full h-56 md:h-80 bg-gray-100 rounded-2xl shadow-md transform md:translate-x-8 lg:translate-x-12 -rotate-1 z-0"></div>
+              {/* Floating decorative circles - optimized for light theme */}
+              <div className="absolute -top-6 -right-6 w-24 h-24 bg-green-200 rounded-full blur-3xl opacity-60 animate-pulse"></div>
+              <div className="absolute top-1/3 -left-8 w-16 h-16 bg-blue-200 rounded-full blur-2xl opacity-70"></div>
+              <div
+                className="absolute -bottom-4 right-1/4 w-20 h-20 bg-amber-200 rounded-full blur-2xl opacity-65 animate-pulse"
+                style={{ animationDelay: "1s" }}
+              ></div>
+              <div className="absolute top-1/2 -right-4 w-12 h-12 bg-green-300 rounded-full blur-xl opacity-75"></div>
 
-              {/* white card - fill the main large card area */}
+              {/* Accent circles with borders */}
+              <div className="absolute top-8 right-8 w-32 h-32 border-2 border-green-300 rounded-full opacity-50"></div>
+              <div className="absolute bottom-12 left-12 w-24 h-24 border-2 border-blue-300 rounded-full opacity-60"></div>
+
               <img
-                src=""
+                src="/img1.jpeg"
                 alt="Smart Farming"
-                className="absolute md:inset-3  w-100 h-100 rounded-2xl shadow-lg transform -rotate-1 z-10 object-cover"
+                className="relative w-full h-56 md:h-80 rounded-2xl shadow-lg transform -rotate-1 object-cover z-10 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:-rotate-0 cursor-pointer"
               />
 
-              {/* orange card - kept in front and positioned to overlap like the design */}
-              <img
-                src=""
-                alt="Farm Community"
-                className="absolute 
-                border-amber-400 -bottom-8 md:-bottom-6 left-4 md:left-16 w-52 h-36 rounded-2xl shadow-lg transform -rotate-6 z-20 object-cover"
-              />
+              <div className="absolute -bottom-8 md:-bottom-6 right-4 md:right-16 z-20">
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-400 via-amber-400 to-blue-400 rounded-2xl blur-sm group-hover:blur-md transition-all duration-500"></div>
+
+                  <div className="relative bg-white p-1.5 rounded-2xl shadow-2xl">
+                    <img
+                      src="/img2.jpeg"
+                      alt="Farm Community"
+                      className="w-64 h-44 rounded-xl object-cover transition-all duration-500 group-hover:scale-105 group-hover:rotate-1 cursor-pointer"
+                    />
+                  </div>
+
+                  <div className="absolute -top-2 -left-2 bg-gradient-to-r from-green-500 to-green-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                    <i className="fas fa-leaf mr-1"></i>
+                    Eco
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -186,10 +206,6 @@ const Landing = () => {
           </div>
         </div>
       </section>
-
-      {/* Features section removed to match provided landing design */}
-
-      {/* Footer removed to match provided landing design */}
     </div>
   );
 };

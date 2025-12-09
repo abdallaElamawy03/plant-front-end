@@ -90,16 +90,30 @@ const PlantDiagnosis = () => {
     setLoading(true);
 
     try {
-      // Track activity in backend
+      // Call AI diagnosis endpoint
       const symptomsText = selectedSymptoms.join(", ");
+      const diagnosisResponse = await axiosPrivate.post(
+        "/ai/plant-diagnosis",
+        {
+          image: imagePreview, // base64 image
+          plantType: "Unknown",
+          symptoms: symptomsText,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      // Set the AI diagnosis result
+      setDiagnosisResult(diagnosisResponse.data);
+
+      // Track activity in backend
       await axiosPrivate.post(
         "/activity/track",
         {
           type: "plant_diagnosis",
-          description: `Diagnosed plant - Symptoms: ${symptomsText.substring(
-            0,
-            50
-          )}${symptomsText.length > 50 ? "..." : ""}`,
+          description: `Diagnosed plant - ${diagnosisResponse.data.detected.disease} (${diagnosisResponse.data.detected.severity})`,
           link: "/diagnosis",
         },
         {
@@ -108,22 +122,10 @@ const PlantDiagnosis = () => {
         }
       );
 
-      setDiagnosisResult({
-        disease: "Diagnosis Complete",
-        confidence: 100,
-        treatment:
-          "Your plant diagnosis has been recorded. Check back for recommendations.",
-      });
-
-      console.log("Plant diagnosis tracked successfully");
+      console.log("Plant diagnosis completed successfully");
     } catch (err) {
       console.error("Error diagnosing disease:", err);
-      // Still show success to user even if tracking fails
-      setDiagnosisResult({
-        disease: "Diagnosis Complete",
-        confidence: 100,
-        treatment: "Your plant diagnosis has been recorded.",
-      });
+      alert("Error processing diagnosis. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -237,27 +239,66 @@ const PlantDiagnosis = () => {
               </div>
 
               {/* Symptoms Section */}
-              <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold mb-4 text-gray-900">
+              <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+                <h3 className="text-lg font-semibold mb-3 text-gray-900">
                   {t("plantDiagnosis.symptomsSection.title")}
                 </h3>
 
-                <div className="space-y-3">
+                <select
+                  multiple
+                  value={selectedSymptoms}
+                  onChange={(e) => {
+                    const options = Array.from(e.target.selectedOptions);
+                    setSelectedSymptoms(options.map((option) => option.value));
+                  }}
+                  className="w-full bg-white border border-gray-300 rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent [&>option:checked]:bg-green-600 [&>option:checked]:text-white dark:[&>option:checked]:bg-green-500 [&>option:hover:not(:checked)]:bg-green-50 dark:[&>option:hover]:bg-green-900"
+                  size="6"
+                >
                   {symptoms.map((symptom) => (
-                    <label
+                    <option
                       key={symptom.key}
-                      className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-3 rounded-lg transition-colors"
+                      value={symptom.label}
+                      className="py-2 px-2 cursor-pointer"
                     >
-                      <input
-                        type="checkbox"
-                        checked={selectedSymptoms.includes(symptom.label)}
-                        onChange={() => handleSymptomToggle(symptom.label)}
-                        className="w-5 h-5 text-green-600 bg-white border-gray-300 rounded focus:ring-green-500 focus:ring-2"
-                      />
-                      <span className="text-gray-700">{symptom.label}</span>
-                    </label>
+                      {symptom.label}
+                    </option>
                   ))}
-                </div>
+                </select>
+
+                {selectedSymptoms.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {selectedSymptoms.map((symptom) => (
+                      <span
+                        key={symptom}
+                        className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm flex items-center gap-1"
+                      >
+                        {symptom}
+                        <button
+                          onClick={() => handleSymptomToggle(symptom)}
+                          className="hover:bg-green-200 rounded-full p-0.5"
+                        >
+                          <svg
+                            className="w-3 h-3"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                <p className="text-xs text-gray-500 mt-2">
+                  Hold Ctrl/Cmd to select multiple symptoms
+                </p>
               </div>
 
               {/* Submit Button */}
@@ -365,14 +406,30 @@ const PlantDiagnosis = () => {
                     Diagnosis Complete!
                   </h3>
 
-                  <div className="w-full mt-6 space-y-4">
+                  <div className="w-full mt-6 space-y-4 max-h-[500px] overflow-y-auto">
                     <div className="bg-gray-50 rounded-lg p-4 text-left border border-gray-200">
                       <h4 className="font-semibold mb-2 text-gray-900">
                         Detected Disease:
                       </h4>
-                      <p className="text-gray-900 text-lg">
-                        {diagnosisResult.disease}
+                      <p className="text-gray-900 text-lg font-bold">
+                        {diagnosisResult.detected.disease}
                       </p>
+                      <p className="text-gray-600 text-sm mt-2">
+                        {diagnosisResult.detected.description}
+                      </p>
+                      <div className="mt-2">
+                        <span
+                          className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
+                            diagnosisResult.detected.severity === "Severe"
+                              ? "bg-red-100 text-red-700"
+                              : diagnosisResult.detected.severity === "Moderate"
+                              ? "bg-yellow-100 text-yellow-700"
+                              : "bg-green-100 text-green-700"
+                          }`}
+                        >
+                          {diagnosisResult.detected.severity}
+                        </span>
+                      </div>
                     </div>
 
                     <div className="bg-gray-50 rounded-lg p-4 text-left border border-gray-200">
@@ -383,26 +440,37 @@ const PlantDiagnosis = () => {
                         <div className="flex-1 bg-gray-200 rounded-full h-3">
                           <div
                             className="bg-green-600 h-3 rounded-full"
-                            style={{ width: `${diagnosisResult.confidence}%` }}
+                            style={{
+                              width: diagnosisResult.detected.confidence,
+                            }}
                           ></div>
                         </div>
                         <span className="text-gray-900 font-semibold">
-                          {diagnosisResult.confidence}%
+                          {diagnosisResult.detected.confidence}
                         </span>
                       </div>
                     </div>
 
                     <div className="bg-gray-50 rounded-lg p-4 text-left border border-gray-200">
                       <h4 className="font-semibold mb-2 text-gray-900">
-                        Selected Symptoms:
+                        Cause:
+                      </h4>
+                      <p className="text-gray-700 text-sm">
+                        {diagnosisResult.detected.cause}
+                      </p>
+                    </div>
+
+                    <div className="bg-gray-50 rounded-lg p-4 text-left border border-gray-200">
+                      <h4 className="font-semibold mb-2 text-gray-900">
+                        Affected Parts:
                       </h4>
                       <div className="flex flex-wrap gap-2">
-                        {selectedSymptoms.map((symptom) => (
+                        {diagnosisResult.detected.affectedParts.map((part) => (
                           <span
-                            key={symptom}
-                            className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm"
+                            key={part}
+                            className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm"
                           >
-                            {symptom}
+                            {part}
                           </span>
                         ))}
                       </div>
@@ -410,10 +478,83 @@ const PlantDiagnosis = () => {
 
                     <div className="bg-gray-50 rounded-lg p-4 text-left border border-gray-200">
                       <h4 className="font-semibold mb-2 text-gray-900">
-                        Treatment Recommendations:
+                        Immediate Treatment:
                       </h4>
-                      <p className="text-gray-700 text-sm">
-                        {diagnosisResult.treatment}
+                      <ul className="text-gray-700 text-sm space-y-1 list-disc list-inside">
+                        {diagnosisResult.treatment.immediate.map(
+                          (step, idx) => (
+                            <li key={idx}>{step}</li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+
+                    <div className="bg-gray-50 rounded-lg p-4 text-left border border-gray-200">
+                      <h4 className="font-semibold mb-2 text-gray-900">
+                        Prevention Tips:
+                      </h4>
+                      <ul className="text-gray-700 text-sm space-y-1 list-disc list-inside">
+                        {diagnosisResult.treatment.preventive.map(
+                          (tip, idx) => (
+                            <li key={idx}>{tip}</li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+
+                    <div className="bg-gray-50 rounded-lg p-4 text-left border border-gray-200">
+                      <h4 className="font-semibold mb-2 text-gray-900">
+                        Environmental Factors:
+                      </h4>
+                      <div className="text-sm space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Temperature:</span>
+                          <span className="text-gray-900 font-medium">
+                            {
+                              diagnosisResult.environmentalFactors.temperature
+                                .current
+                            }{" "}
+                            (Optimal:{" "}
+                            {
+                              diagnosisResult.environmentalFactors.temperature
+                                .optimal
+                            }
+                            )
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Humidity:</span>
+                          <span className="text-gray-900 font-medium">
+                            {
+                              diagnosisResult.environmentalFactors.humidity
+                                .current
+                            }{" "}
+                            (Optimal:{" "}
+                            {
+                              diagnosisResult.environmentalFactors.humidity
+                                .optimal
+                            }
+                            )
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Sunlight:</span>
+                          <span className="text-gray-900 font-medium">
+                            {
+                              diagnosisResult.environmentalFactors.sunlight
+                                .status
+                            }
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-blue-50 rounded-lg p-4 text-left border border-blue-200">
+                      <h4 className="font-semibold mb-2 text-blue-900">
+                        Recovery Time:
+                      </h4>
+                      <p className="text-blue-700 text-sm font-medium">
+                        {diagnosisResult.treatment.estimatedRecoveryTime}
                       </p>
                     </div>
                   </div>

@@ -106,7 +106,7 @@ const Login = () => {
           <div className="bg-white border border-gray-200 rounded-xl p-8 shadow-lg">
             <h4 className="text-red-600 font-bold mb-3">{errMsg}</h4>
             <form onSubmit={handleSubmit}>
-              <label className="block text-sm text-gray-300 mb-2">
+              <label className="block text-sm text-gray-900 mb-2">
                 {t("login.username")}
               </label>
               <input
@@ -119,7 +119,7 @@ const Login = () => {
                 className="w-full mb-4 bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 rounded px-3 py-2 focus:outline-none focus:border-green-500"
               />
 
-              <label className="block text-sm text-gray-300 mb-2">
+              <label className="block text-sm text-gray-900 mb-2">
                 {t("login.password")}
               </label>
               <input

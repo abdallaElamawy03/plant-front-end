@@ -51,12 +51,30 @@ const SoilAnalysis = () => {
     setLoading(true);
 
     try {
+      // Call AI soil analysis endpoint
+      const analysisResponse = await axiosPrivate.post(
+        "/ai/soil-analysis",
+        {
+          image: null,
+          location: "User Farm",
+          sampleDepth: "15cm",
+          manualData: formData,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      // Set the AI analysis result
+      setAnalysisResult(analysisResponse.data);
+
       // Track activity in backend
       await axiosPrivate.post(
         "/activity/track",
         {
           type: "soil_analysis",
-          description: `Completed soil analysis - pH: ${formData.ph}, Moisture: ${formData.moisture}%`,
+          description: `Soil analysis - Type: ${analysisResponse.data.soilType}, Health: ${analysisResponse.data.healthStatus}`,
           link: "/soil",
         },
         {
@@ -65,19 +83,10 @@ const SoilAnalysis = () => {
         }
       );
 
-      setAnalysisResult({
-        status: "success",
-        message: "Analysis complete! Your data has been recorded.",
-      });
-
-      console.log("Soil analysis tracked successfully");
+      console.log("Soil analysis completed successfully");
     } catch (err) {
       console.error("Error analyzing soil:", err);
-      // Still show success to user even if tracking fails
-      setAnalysisResult({
-        status: "success",
-        message: "Analysis complete! Your data has been recorded.",
-      });
+      alert("Error processing soil analysis. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -303,30 +312,174 @@ const SoilAnalysis = () => {
                   <h3 className="text-2xl font-bold mb-3 text-green-600">
                     {t("soilAnalysis.results.complete")}
                   </h3>
-                  <p className="text-gray-700 mb-4">{analysisResult.message}</p>
-                  <div className="bg-gray-50 rounded-lg p-4 mt-4 w-full text-left border border-gray-200">
-                    <h4 className="font-semibold mb-2 text-gray-900">
-                      {t("soilAnalysis.results.submittedData")}
-                    </h4>
-                    <div className="text-sm text-gray-600 space-y-1">
-                      <p>
-                        {t("soilAnalysis.form.ph")}: {formData.ph}
+
+                  <div className="w-full mt-6 space-y-4 max-h-[500px] overflow-y-auto">
+                    <div className="bg-gray-50 rounded-lg p-4 text-left border border-gray-200">
+                      <h4 className="font-semibold mb-2 text-gray-900">
+                        Soil Type:
+                      </h4>
+                      <p className="text-gray-900 text-lg font-bold">
+                        {analysisResult.soilType}
                       </p>
-                      <p>
-                        {t("soilAnalysis.form.moisture")}: {formData.moisture}%
-                      </p>
-                      <p>
-                        {t("soilAnalysis.form.nitrogen")}: {formData.nitrogen}
-                      </p>
-                      <p>
-                        {t("soilAnalysis.form.phosphorus")}:{" "}
-                        {formData.phosphorus}
-                      </p>
-                      <p>
-                        {t("soilAnalysis.form.potassium")}: {formData.potassium}
+                      <div className="mt-2">
+                        <span
+                          className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
+                            analysisResult.healthStatus === "Excellent"
+                              ? "bg-green-100 text-green-700"
+                              : analysisResult.healthStatus === "Good"
+                              ? "bg-blue-100 text-blue-700"
+                              : analysisResult.healthStatus === "Fair"
+                              ? "bg-yellow-100 text-yellow-700"
+                              : "bg-red-100 text-red-700"
+                          }`}
+                        >
+                          {analysisResult.healthStatus}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="bg-gray-50 rounded-lg p-4 text-left border border-gray-200">
+                      <h4 className="font-semibold mb-2 text-gray-900">
+                        Confidence:
+                      </h4>
+                      <p className="text-gray-900 font-medium">
+                        {analysisResult.confidence}
                       </p>
                     </div>
+
+                    <div className="bg-gray-50 rounded-lg p-4 text-left border border-gray-200">
+                      <h4 className="font-semibold mb-3 text-gray-900">
+                        Soil Properties:
+                      </h4>
+                      <div className="space-y-3">
+                        <div className="border-b border-gray-200 pb-2">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="text-sm font-medium text-gray-700">
+                              pH Level
+                            </span>
+                            <span className="text-sm font-bold text-gray-900">
+                              {analysisResult.properties.ph.value}
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-600">
+                            {analysisResult.properties.ph.status} -{" "}
+                            {analysisResult.properties.ph.recommendation}
+                          </p>
+                        </div>
+                        <div className="border-b border-gray-200 pb-2">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="text-sm font-medium text-gray-700">
+                              Nitrogen
+                            </span>
+                            <span className="text-sm font-bold text-gray-900">
+                              {analysisResult.properties.nitrogen.level}{" "}
+                              {analysisResult.properties.nitrogen.unit}
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-600">
+                            {analysisResult.properties.nitrogen.status} -{" "}
+                            {analysisResult.properties.nitrogen.recommendation}
+                          </p>
+                        </div>
+                        <div className="border-b border-gray-200 pb-2">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="text-sm font-medium text-gray-700">
+                              Phosphorus
+                            </span>
+                            <span className="text-sm font-bold text-gray-900">
+                              {analysisResult.properties.phosphorus.level}{" "}
+                              {analysisResult.properties.phosphorus.unit}
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-600">
+                            {analysisResult.properties.phosphorus.status} -{" "}
+                            {
+                              analysisResult.properties.phosphorus
+                                .recommendation
+                            }
+                          </p>
+                        </div>
+                        <div className="border-b border-gray-200 pb-2">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="text-sm font-medium text-gray-700">
+                              Potassium
+                            </span>
+                            <span className="text-sm font-bold text-gray-900">
+                              {analysisResult.properties.potassium.level}{" "}
+                              {analysisResult.properties.potassium.unit}
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-600">
+                            {analysisResult.properties.potassium.status} -{" "}
+                            {analysisResult.properties.potassium.recommendation}
+                          </p>
+                        </div>
+                        <div className="border-b border-gray-200 pb-2">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="text-sm font-medium text-gray-700">
+                              Organic Matter
+                            </span>
+                            <span className="text-sm font-bold text-gray-900">
+                              {
+                                analysisResult.properties.organicMatter
+                                  .percentage
+                              }
+                              %
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-600">
+                            {analysisResult.properties.organicMatter.status} -{" "}
+                            {
+                              analysisResult.properties.organicMatter
+                                .recommendation
+                            }
+                          </p>
+                        </div>
+                        <div>
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="text-sm font-medium text-gray-700">
+                              Moisture
+                            </span>
+                            <span className="text-sm font-bold text-gray-900">
+                              {analysisResult.properties.moisture.percentage}%
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-600">
+                            {analysisResult.properties.moisture.status} -{" "}
+                            {analysisResult.properties.moisture.recommendation}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-green-50 rounded-lg p-4 text-left border border-green-200">
+                      <h4 className="font-semibold mb-2 text-green-900">
+                        Suitable Crops:
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {analysisResult.suitableFor.map((crop) => (
+                          <span
+                            key={crop}
+                            className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium"
+                          >
+                            {crop}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="bg-blue-50 rounded-lg p-4 text-left border border-blue-200">
+                      <h4 className="font-semibold mb-2 text-blue-900">
+                        Recommendations:
+                      </h4>
+                      <ul className="text-sm text-blue-700 space-y-1 list-disc list-inside">
+                        {analysisResult.recommendations.map((rec, idx) => (
+                          <li key={idx}>{rec}</li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
+
                   <button
                     onClick={() => {
                       setAnalysisResult(null);

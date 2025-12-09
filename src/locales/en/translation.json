@@ -55,7 +55,7 @@
     "subtitle": "Welcome back to the future of farming",
     "username": "Username",
     "password": "Password",
-    "rememberMe": "Trust This Device",
+    "rememberMe": "Remember me",
     "signIn": "Sign In",
     "noAccount": "Need an Account?",
     "signUp": "Sign Up",
@@ -80,9 +80,9 @@
     "createAccount": "Create Account",
     "alreadyHaveAccount": "Already have an account?",
     "instructions": {
-      "username": "4 to 24 characters. Must begin with a letter. Letters, numbers, underscores, hyphens allowed.",
-      "password": "8 to 24 characters. Must include uppercase and lowercase letters, a number and a special character.",
-      "confirmPassword": "Must match the password input field."
+      "username": "Enter your username (4-24 characters)",
+      "password": "Enter a strong password (8-24 characters)",
+      "confirmPassword": "Confirm your password"
     },
     "errors": {
       "noServerResponse": "No Server Response",

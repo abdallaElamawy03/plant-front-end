@@ -1,9 +1,0 @@
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* small helper to ensure anchor default color doesn't clash */
-a:hover {
-  color: inherit;
-}

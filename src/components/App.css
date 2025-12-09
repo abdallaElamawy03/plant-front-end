@@ -18,6 +18,15 @@ body,
   color: var(--text);
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  color: inherit;
+}
+
 .text-decor {
   text-decoration: none;
 }
@@ -172,7 +181,18 @@ body,
 }
 
 /* Community link appearance when NOT active: subtle text color and small pill in light theme */
-.community-link { padding: 0.35rem 0.75rem; border-radius: 0.375rem; }
-.light-theme .community-link { color: var(--primary); background: rgba(16,185,129,0.06); }
-.dark-theme .community-link { color: #a7f3d0; background: transparent; }
-.community-link.active-link { box-shadow: none; }
+.community-link {
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.375rem;
+}
+.light-theme .community-link {
+  color: var(--primary);
+  background: rgba(16, 185, 129, 0.06);
+}
+.dark-theme .community-link {
+  color: #a7f3d0;
+  background: transparent;
+}
+.community-link.active-link {
+  box-shadow: none;
+}

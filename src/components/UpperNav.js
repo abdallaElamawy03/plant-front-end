@@ -32,7 +32,7 @@ const UpperNav = () => {
           <div className="w-9 h-9 bg-green-600 rounded-md flex items-center justify-center text-white">
             <i className="fas fa-seedling"></i>
           </div>
-          <Link to="/" className="text-lg font-semibold">
+          <Link to="/dashboard" className="text-lg font-semibold">
             {t("common.appName")}
           </Link>
         </div>
